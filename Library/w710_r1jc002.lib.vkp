@@ -383,7 +383,7 @@
 0A2C: 00000000 E9D7F144 ; 28B: int IsAudioPlayerBook( BOOK* bk);
 0A30: 00000000 B12CF244 ; 28C: void PlayerControl( BOOK* AudioPlayerBook, int );
 0A34: 00000000 451E0E45 ; 28D: void SwitchRadioStationFromList( BOOK* FmRadioBook, int );
-0A38: 00000000 81693745 ; 28E: void Shortcut_Run( wchar_t* shortcut_name );
+0A38: 00000000 19E63645 ; 28E: void Shortcut_Run( wchar_t* shortcut_name );
 0A3C: 00000000 A105E744 ; 28F: int mkdir( const wchar_t* path );
 0A40: 00000000 950CE744 ; 290: int rmdir( const wchar_t* path, int zero );
 0A44: 00000000 7D3AE744 ; 291: int chmod( const wchar_t* path, const wchar_t* fname, int amode );
