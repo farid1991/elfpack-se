@@ -556,7 +556,7 @@
 ;0CD8: xxxxxxxx yyyyyyyy ; 336: void VideoPlayerControl( BOOK* VideoPlayerBook, int );
 0CDC: 00000000 F598E514 ; 337: void Video_ActionBack( BOOK* VideoPlayerBook, void* );
 0CE0: 00000000 49C04115 ; 338: void Video_ExtractFrame( BOOK* VideoPlayerBook, void* );
-0CE4: 00000000 A9753F15 ; 339: void Video_ZoomOn( BOOK* VideoPlayerBook, void* );
+0CE4: 00000000 19BC4115 ; 339: void Video_ZoomOn( BOOK* VideoPlayerBook, void* );
 0CE8: 00000000 B1643614 ; 33A: void RightNow_SetActive( int flag );
 ;0CEC: xxxxxxxx yyyyyyyy ; 33B: void VideoResize_AutomateMode( BOOK* VideoPlayerBook, u16 VideoWidth, u16 VideoHeight, u16* NewWidth, u16* NewHeight );
 ;0CF0: xxxxxxxx yyyyyyyy ; 33C: void VideoResize_AllScreenMode( BOOK* VideoPlayerBook, u16 VideoWidth, u16 VideoHeight, u16* NewWidth, u16* NewHeight );
@@ -711,7 +711,7 @@
 0F44: 00000000 C58D2E14 ; 3D1: void DispObject_WindowSetSize( DISP_OBJ*, int w, int h );
 0F48: 00000000 6DA96F15 ; 3D2: TEXTID Feedback_DispObject_GetText( DISP_OBJ* );
 0F4C: 00000000 656B0614 ; 3D3: void DispObject_SoftKeys_ExecuteAction( DISP_OBJ*, u16 actionID );
-0F50: 00000000 F9F83D14 ; 3D4: LIST* DataBrowserBook_GetCurrentFoldersList( BOOK* DataBrowserBook );
+0F50: 00000000 FD023E14 ; 3D4: LIST* DataBrowserBook_GetCurrentFoldersList( BOOK* DataBrowserBook );
 0F54: 00000000 31ECE714 ; 3D5: void DispObject_SetAnimation( DISP_OBJ*, int style );
 0F58: 00000000 09D23B14 ; 3D6: void GUIObject_SetZOrder( GUI*, char, GUI* );
 0F5C: 00000000 054AEC14 ; 3D7: int StringInput_GetCursorPosition( GUI*, u16* pos, char* _zero );

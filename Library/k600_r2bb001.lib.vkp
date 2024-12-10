@@ -1,6 +1,6 @@
 ;K600 SW-R2BB001
 ;Function library
-;v2022
+;v2024
 ;(c) Hussein , IronMaster
 ;(p) vetaxa-manchyk, farid
 +2146FC00
@@ -68,11 +68,11 @@
 053C: FFFFFFFF 95367520 ; 14F: void GUIObject_SoftKeys_RemoveItem( GUI*, u16 actionID );
 0540: FFFFFFFF 85387520 ; 150: void GUIObject_SoftKeys_SetVisible( GUI*, u16 actionID, BOOL );
 0544: FFFFFFFF 493D7520 ; 151: void GUIObject_SoftKeys_SuppressDefaultAction( GUI*, u16 actionID );
-0548: FFFFFFFF 657FD620 ; 152: wchar_t* wstrcpy( wchar_t* dest, const wchar_t* source );
-054C: FFFFFFFF 1980D620 ; 153: wchar_t* wstrncpy( wchar_t* dest, const wchar_t* source, int maxlen );
-0550: FFFFFFFF 057FD620 ; 154: wchar_t* wstrcat( wchar_t* wstr, const wchar_t* subwstr );
-0554: FFFFFFFF B57FD620 ; 155: wchar_t* wstrncat( wchar_t* wstr, const wchar_t* subwstr, int maxlen );
-0558: FFFFFFFF 357FD620 ; 156: int wstrcmp( const wchar_t* wstr1, const wchar_t* wstr2 );
+0548: FFFFFFFF 61F16020 ; 152: wchar_t* wstrcpy( wchar_t* dest, const wchar_t* source );
+054C: FFFFFFFF A9F16020 ; 153: wchar_t* wstrncpy( wchar_t* dest, const wchar_t* source, int maxlen );
+0550: FFFFFFFF 09F26020 ; 154: wchar_t* wstrcat( wchar_t* wstr, const wchar_t* subwstr );
+0554: FFFFFFFF 55F26020 ; 155: wchar_t* wstrncat( wchar_t* wstr, const wchar_t* subwstr, int maxlen );
+0558: FFFFFFFF 11F16020 ; 156: int wstrcmp( const wchar_t* wstr1, const wchar_t* wstr2 );
 055C: FFFFFFFF A17FD620 ; 157: int wstrlen( const wchar_t* wstr );
 0560: FFFFFFFF B5056120 ; 158: wchar_t* str2wstr( wchar_t* wstr, const char* str );
 0564: FFFFFFFF 1177D620 ; 159: int strcmp( const char* str1, const char* str2 );
@@ -160,7 +160,7 @@
 06AC: FFFFFFFF F95D4220 ; 1AB: void UI_Event_toBookIDwData( int event, int BookID, void* message, void (*free_proc)( void* ) );
 06B0: FFFFFFFF F9212320 ; 1AC: int List_Find( LIST* lst, void* itemtofind, LISTFINDCALLBACK cmp_proc );
 06B4: FFFFFFFF C5202320 ; 1AD: void* List_Get( LIST* lst, int index );
-06B8: FFFFFFFF 6980D620 ; 1AE: wchar_t* wstrrchr( const wchar_t* wstr, wchar_t wchar );
+06B8: FFFFFFFF CD066120 ; 1AE: wchar_t* wstrrchr( const wchar_t* wstr, wchar_t wchar );
 06BC: FFFFFFFF 11CD2520 ; 1AF: void BookObj_CallSubroutine( BOOK* book, BOOK_SUBROUTINE* subr );
 06C0: FFFFFFFF 451F2320 ; 1B0: int List_InsertLast( LIST* lst, void* item );
 06C4: FFFFFFFF 858ED220 ; 1B1: void debug_printf( const char* fmt, ... );
@@ -314,7 +314,7 @@
 0914: FFFFFFFF 8DD67720 ; 245: void GUIonMessage_SubItem_SetText( GUI_MESSAGE* msg, TEXTID );
 0918: FFFFFFFF 7DD67720 ; 246: int GUIonMessage_SubItem_GetCreatedParentIndex( GUI_MESSAGE* msg );
 091C: FFFFFFFF E14D7320 ; 247: void GoMusic( void );
-0920: xxxxxxxx 3DD67720 ; 248: int GUIonMessage_SubItem_GetSelectedIndex( GUI_MESSAGE* msg );
+0920: FFFFFFFF 3DD67720 ; 248: int GUIonMessage_SubItem_GetSelectedIndex( GUI_MESSAGE* msg );
 0924: FFFFFFFF F9D67720 ; 249: void GUIonMessage_SubItem_SetDisabled( GUI_MESSAGE* msg, BOOL state );
 0928: FFFFFFFF 59637520 ; 24A: int PlayFileV( const wchar_t* path, const wchar_t* fname, int vol );
 092C: FFFFFFFF 697A4620 ; 24B: int GetSilent( void );
@@ -343,25 +343,25 @@
 0988: FFFFFFFF D9C57520 ; 262: void GC_DrawLine( GC* gc, int x1, int y1, int x2, int y2 );
 098C: FFFFFFFF 6DC77520 ; 263: void GC_DrawFRect( GC* gc, int color, int x1, int y1, int x2, int y2 );
 0990: FFFFFFFF 85B97520 ; 264: int GC_WritePixels( GC* gc, int x1, int y1, int x2, int y2, int* bmp );
-;0994: xxxxxxxx yyyyyyyy ; 265: png_structp png_create_read_struct_2( png_const_charp user_png_ver, png_voidp error_ptr, png_error_ptr error_fn, png_error_ptr warn_fn, png_voidp mem_ptr, png_malloc_ptr malloc_fn, png_free_ptr free_fn );
-;0998: xxxxxxxx yyyyyyyy ; 266: void png_destroy_read_struct( png_structpp png_ptr_ptr, png_infopp info_ptr_ptr, png_infopp end_info_ptr_ptr );
-;099C: xxxxxxxx yyyyyyyy ; 267: png_infop png_create_info_struct( png_structp png_ptr );
-;09A0: xxxxxxxx yyyyyyyy ; 268: void png_destroy_info_struct( png_structp png_ptr, png_infopp info_ptr_ptr );
+0994: FFFFFFFF C5F29B20 ; 265: png_structp png_create_read_struct_2( png_const_charp user_png_ver, png_voidp error_ptr, png_error_ptr error_fn, png_error_ptr warn_fn, png_voidp mem_ptr, png_malloc_ptr malloc_fn, png_free_ptr free_fn );
+0998: FFFFFFFF 15FC9B20 ; 266: void png_destroy_read_struct( png_structpp png_ptr_ptr, png_infopp info_ptr_ptr, png_infopp end_info_ptr_ptr );
+099C: FFFFFFFF 69C59B20 ; 267: png_infop png_create_info_struct( png_structp png_ptr );
+09A0: FFFFFFFF 31C69B20 ; 268: void png_destroy_info_struct( png_structp png_ptr, png_infopp info_ptr_ptr );
 ;09A4: xxxxxxxx yyyyyyyy ; 269: void png_set_progressive_read_fn( png_structp png_ptr, png_voidp progressive_ptr, png_progressive_info_ptr info_fn, png_progressive_row_ptr row_fn, png_progressive_end_ptr end_fn );
 ;09A8: xxxxxxxx yyyyyyyy ; 26A: void png_process_data( png_structp png_ptr, png_infop info_ptr, png_bytep buffer, png_size_t buffer_size );
 ;09AC: xxxxxxxx yyyyyyyy ; 26B: void png_read_update_info( png_structp png_ptr, png_infop info_ptr );
 ;09B0: xxxxxxxx yyyyyyyy ; 26C: png_voidp png_get_progressive_ptr( png_structp png_ptr );
-;09B4: xxxxxxxx yyyyyyyy ; 26D: png_uint_32 png_get_IHDR( png_structp png_ptr, png_infop info_ptr, png_uint_32* width, png_uint_32* height, int* bit_depth, int* color_type, int* interlace_method, int* compression_method, int* filter_method );
-;09B8: xxxxxxxx yyyyyyyy ; 26E: void png_set_strip_16( png_structp png_ptr );
-;09BC: xxxxxxxx yyyyyyyy ; 26F: void png_set_gray_1_2_4_to_8( png_structp png_ptr );
-;09C0: xxxxxxxx yyyyyyyy ; 270: void png_set_gray_to_rgb( png_structp png_ptr );
-;09C4: xxxxxxxx yyyyyyyy ; 271: png_uint_32 png_get_valid( png_structp png_ptr, png_infop info_ptr, png_uint_32 flag );
-;09C8: xxxxxxxx yyyyyyyy ; 272: void png_set_tRNS_to_alpha( png_structp png_ptr );
-;09CC: xxxxxxxx yyyyyyyy ; 273: void png_set_filler( png_structp png_ptr, png_uint_32 filler, int flags );
-;09D0: xxxxxxxx yyyyyyyy ; 274: void png_set_palette_to_rgb( png_structp png_ptr );
+09B4: FFFFFFFF A5F09B20 ; 26D: png_uint_32 png_get_IHDR( png_structp png_ptr, png_infop info_ptr, png_uint_32* width, png_uint_32* height, int* bit_depth, int* color_type, int* interlace_method, int* compression_method, int* filter_method );
+09B8: FFFFFFFF 15FE9B20 ; 26E: void png_set_strip_16( png_structp png_ptr );
+09BC: FFFFFFFF 31FE9B20 ; 26F: void png_set_gray_1_2_4_to_8( png_structp png_ptr );
+09C0: FFFFFFFF 25FE9B20 ; 270: void png_set_gray_to_rgb( png_structp png_ptr );
+09C4: FFFFFFFF 91F09B20 ; 271: png_uint_32 png_get_valid( png_structp png_ptr, png_infop info_ptr, png_uint_32 flag );
+09C8: FFFFFFFF 35FE9B20 ; 272: void png_set_tRNS_to_alpha( png_structp png_ptr );
+09CC: FFFFFFFF 851C9C20 ; 273: void png_set_filler( png_structp png_ptr, png_uint_32 filler, int flags );
+09D0: FFFFFFFF 21FE9B20 ; 274: void png_set_palette_to_rgb( png_structp png_ptr );
 ;09D4: xxxxxxxx yyyyyyyy ; 275: png_uint_32 png_get_rowbytes( png_structp png_ptr, png_infop info_ptr );
 ;09D8: xxxxxxxx yyyyyyyy ; 276: void png_progressive_combine_row( png_structp png_ptr, png_bytep old_row, png_bytep new_row );
-;09DC: xxxxxxxx yyyyyyyy ; 277: int png_sig_cmp( png_bytep sig, png_size_t start, png_size_t num_to_check );
+09DC: FFFFFFFF BDC49B20 ; 277: int png_sig_cmp( png_bytep sig, png_size_t start, png_size_t num_to_check );
 09E0: FFFFFFFF 34950A20 ; 278: int setjmp( jmp_buf jmpbuf );
 09E4: FFFFFFFF 58950A20 ; 279: void longjmp( jmp_buf, int );
 09E8: FFFFFFFF 73250720 ; 27A: int inflateInit2_( z_streamp strm, int windowBits, const char* version, int stream_size );

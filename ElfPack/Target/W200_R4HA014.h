@@ -30,6 +30,7 @@
 #define PATH_DEFAULT          L"/usb/other"
 
 #define DB_CMD_SETSMALLICON 0x36
+#define DB_CMD_SETTHUMBNAILICON 0x37
 
 #define PAGE_ENTER_EVENT 5
 #define PAGE_EXIT_EVENT 6
