@@ -79,7 +79,7 @@ typedef struct RECT
 #define CHIPID_DB2000 0x7000
 #define CHIPID_DB2010 0x8000
 #define CHIPID_DB2020 0x9800
-#define CHIPID_PNX5230 0xD000
+#define CHIPID_PNX5230 0x4000
 #define CHIPID_DB3150 0xC800
 #define CHIPID_DB3200 0xD800
 #define CHIPID_DB3210 0xE800
@@ -204,7 +204,7 @@ template<typename T,typename T2> LISTFINDCALLBACK MKLISTFINDCALLBACK( int(*param
 
 typedef struct DISP_OBJ
 {
-	char dummy[0x16C];
+	char dummy[0x200];
 }DISP_OBJ;
 
 typedef int (*DISP_OBJ_ONCREATE_METHOD)(DISP_OBJ*);
