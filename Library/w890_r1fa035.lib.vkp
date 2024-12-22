@@ -1,8 +1,9 @@
 ;W890 SW-R1FA035
-;Function Library
+;Function library
 ;Last Update 7.06.2010 10:00
 ;(c) Hussein , IronMaster
 ;(p) MaW
+;pAtChFiLe=/boot/phone_app.cxc
 +1220FC00
 0448: 00000000 2C160010 ; 112: void* memset( void* mem, char chr, int size );
 044C: 00000000 08F40B10 ; 113: int memcpy( void* dest, const void* source, int cnt );

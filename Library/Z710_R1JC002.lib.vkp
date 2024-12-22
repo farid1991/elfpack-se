@@ -3,7 +3,6 @@
 ;v2022
 ;(c) Hussein , IronMaster
 ;(p) farid
-;
 +45C3FC00
 0448: 00000000 5C531444 ; 112: void* memset( void* mem, char chr, int size );
 044C: 00000000 242F2D44 ; 113: int memcpy( void* dest, const void* source, int cnt );

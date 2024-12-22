@@ -9,11 +9,6 @@ a       EQU     b
         ENDM
 
         RSEG  CODE
-        defadr   DB_PATCH1_RET,0x144DA340+1
-        defadr   DB_PATCH2_RET,0x144D9F4C+1
-        defadr   DB_PATCH3_RET,0x14EF013C+1
-        defadr   DB_PATCH4_RET,0x14422788+1
-        defadr   MESS_HOOK_RET,0x101351BC+1
 
         defadr  memalloc,0x4BA305D4
         defadr  memfree,0x4BA305FC
@@ -109,14 +104,15 @@ NEW_KEYHANDLER3:
 
 
 // --- ParseHelperMessage ---
+        RSEG    PATCH_MMI_MESSAGE_HOOK
         EXTERN  ParseHelperMessage
-        RSEG   CODE
+        RSEG    CODE
         CODE16
 MESS_HOOK:
 	MOV	R7, #1
         LDR     R5, [R6, #0]
         BLX     ParseHelperMessage
-        LDR     R3, =MESS_HOOK_RET
+        LDR     R3, =SFE(PATCH_MMI_MESSAGE_HOOK)+1
         BX      R3
 
         RSEG   PATCH_MMI_MESSAGE_HOOK
@@ -164,6 +160,7 @@ PG_ACTION2:
 
 
 // --- Data Browser ---
+        RSEG    PATCH_DB1
         EXTERN  GetExtTable
         RSEG   CODE
         CODE16
@@ -172,10 +169,10 @@ DB_PATCH1:
         LSL     R1, R4, #2
         LDR     R0, [R0,R1]
         LDR     R1, =LASTEXTDB
-        LDR     R3, =DB_PATCH1_RET
+        LDR     R3, =SFE(PATCH_DB1)+1
         BX      R3
 
-
+        RSEG    PATCH_DB2
         RSEG   CODE
         CODE16
 DB_PATCH2:
@@ -183,9 +180,10 @@ DB_PATCH2:
 	LSL	R1, R7, #2
 	LDR	R0, [R0,R1]
 	LDR	R1, =LASTEXTDB
-        LDR     R3, =DB_PATCH2_RET
+        LDR     R3, =SFE(PATCH_DB2)+1
         BX      R3
 
+        RSEG    PATCH_DB3
         RSEG   CODE
         CODE16
 DB_PATCH3:
@@ -193,9 +191,10 @@ DB_PATCH3:
 	LSL	R1, R5, #2
 	LDR	R7, [R0,R1]
 	LDR	R0, =LASTEXTDB
-        LDR     R3, =DB_PATCH3_RET
+        LDR     R3, =SFE(PATCH_DB3)+1
         BX      R3
 
+        RSEG    PATCH_DB4
         RSEG   CODE
         CODE16
 DB_PATCH4:
@@ -204,7 +203,7 @@ DB_PATCH4:
 	LDR	R0, [R0,R1]
 	LDR	R1, =LASTEXTDB
 	STR	R0, [SP,#0]
-        LDR     R3, =DB_PATCH4_RET
+        LDR     R3, =SFE(PATCH_DB4)+1
         BX      R3
 
 

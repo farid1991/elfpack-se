@@ -374,7 +374,7 @@
 0A00: 00000000 C11A0010 ; 280: char* strcat( char* dest, const char* src );
 0A04: 00000000 39D23B14 ; 281: void GUIObject_SetTitleType( GUI*, int type );
 0A08: 00000000 C56C2414 ; 282: void GUIonMessage_SetItemDisabled( GUI_MESSAGE* msg, BOOL );
-0A0C: 00000000 69010715 ; 283: int REQUEST_IMAGEHANDLER_INTERNAL_REGISTER( const int* sync, u16 ImageHandler, wchar_t* path, wchar_t* fname, int unk, IMAGEID*, char* error );
+0A0C: 00000000 31200915 ; 283: int REQUEST_IMAGEHANDLER_INTERNAL_REGISTER( const int* sync, u16 ImageHandler, wchar_t* path, wchar_t* fname, int unk, IMAGEID*, char* error );
 0A10: 00000000 315DED14 ; 284: int REQUEST_IMAGEHANDLER_INTERNAL_UNREGISTER( const int* sync, u16 ImageHandler, u16*, u16*, IMAGEID, int unk_1, char* error );
 0A14: 00000000 8C90D54B ;8285: SURFACE** get_Surfaces( void );
 0A18: 00000000 098D3514 ; 286: int iconidname2id( const wchar_t* idname, int maxnamelen, int* id );
@@ -463,7 +463,7 @@
 0B64: 00000000 E5AE1C14 ; 2D9: int JavaAppDesc_GetFirstApp( void* JavaDesc );
 0B68: 00000000 21E74E14 ; 2DA: int JavaAppDesc_GetNextApp( void* JavaDesc );
 0B6C: 00000000 D1D64E14 ; 2DB: int JavaAppDesc_GetJavaAppInfo( void* JavaDesc, int ID, wchar_t** wstr );
-0B70: 00000000 D11BA5ED ; 2DC: void OrangeLED_Control( int _free_val, int or_LED_ID, int level, int fade_time );
+;0B70: xxxxxxxx yyyyyyyy ; 2DC: void OrangeLED_Control( int _free_val, int or_LED_ID, int level, int fade_time );
 0B74: 00000000 AD4A1114 ; 2DD: void DispObject_SetRefreshTimer( DISP_OBJ*, int time );
 0B78: 00000000 8D461114 ; 2DE: void DispObject_KillRefreshTimer( DISP_OBJ* );
 0B7C: 00000000 F5B51214 ; 2DF: int IsDataBrowserBook( BOOK* book );
