@@ -1,6 +1,6 @@
 ;G502 SW-R1FA037
 ;Function library
-;v.2016_10_20
+;v 2025
 ;(c) Hussein , IronMaster
 ;(p) farid, adekbiroe
 ;pAtChFiLe=/boot/phone_app.cxc
@@ -463,7 +463,7 @@
 0B64: 00000000 19C7FE10 ; 2D9: int JavaAppDesc_GetFirstApp( void* JavaDesc );
 0B68: 00000000 21C7FE10 ; 2DA: int JavaAppDesc_GetNextApp( void* JavaDesc );
 0B6C: 00000000 25C2FE10 ; 2DB: int JavaAppDesc_GetJavaAppInfo( void* JavaDesc,int ID, wchar_t** wstr );
-0B70: 00000000 D11BA5ED ; 2DC: void OrangeLED_Control( int _free_val, int or_LED_ID, int level, int fade_time );
+;0B70: xxxxxxxx yyyyyyyy ; 2DC: void OrangeLED_Control( int _free_val, int or_LED_ID, int level, int fade_time );
 0B74: 00000000 A1BD6911 ; 2DD: void DispObject_SetRefreshTimer( DISP_OBJ*, int time );
 0B78: 00000000 1DBE6911 ; 2DE: void DispObject_KillRefreshTimer( DISP_OBJ* );
 0B7C: 00000000 95FB0111 ; 2DF: int IsDataBrowserBook( BOOK* book );

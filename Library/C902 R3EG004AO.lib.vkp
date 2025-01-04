@@ -1,6 +1,6 @@
 ;C902 SW-R3EG004AO
 ;Function library
-;ver. 24.07.2012  19:54 
+;v 2025
 ;(c) Hussein , IronMaster
 ;(p) buhh83, MiFa, mc_kibel
 ;pAtChFiLe=/boot/phone_app.cxc
@@ -413,7 +413,7 @@
 0A9C: 00000000 45CAB010 ; 2A7: void _REQUEST_OAF_START_APPLICATION( const int* sync, int __zero, MIDP_DESC*, int ___zero );
 0AA0: 00000000 A9BB9310 ; 2A8: wchar_t* FSX_GetInvalidChar( wchar_t* name );
 0AA4: 00000000 95317F11 ; 2A9: void DataBrowserDesc_SetFoldersNumber( void* DataBrowserDesc, int state );
-0AA8: 00000000 49317F11 ; 2AA: void DataBrowserDesc_SetActions( void* DataBrowserDesc, char* actions );
+0AA8: 00000000 69317F11 ; 2AA: void DataBrowserDesc_SetActions( void* DataBrowserDesc, char* actions );
 0AAC: 00000000 11317F11 ; 2AB: void DataBrowserDesc_SetSelectAction( void* DataBrowserDesc, int state );
 0AB0: 00000000 19317F11 ; 2AC: void DataBrowserDesc_SetSelectActionOnFolders( void* DataBrowserDesc, int state );
 0AB4: 00000000 F5307F11 ; 2AD: void DataBrowserDesc_SetBookID( void* DataBrowserDesc, int BookID );

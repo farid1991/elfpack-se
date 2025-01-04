@@ -657,7 +657,7 @@
 0E6C: 00000000 15496510 ; 39B: GVI_BMP GVI_CreateBitmap( int xsize, int ysize, int bpp );
 0E70: 00000000 79686510 ; 39C: GVI_GC GVI_CreateMemoryGC( GVI_BMP bitmap );
 0E74: 00000000 B5246810 ; 39D: void GVI_DeleteMemoryGC( GVI_GC gc );
-0E78: 00000000 FBF45F11 ; 39E: int StringInput_DispObject_SetLanguage( DISP_OBJ_STRING_INPUT*, int langID, int flag );
+0E78: 00000000 F9F45F11 ; 39E: int StringInput_DispObject_SetLanguage( DISP_OBJ_STRING_INPUT*, int langID, int flag );
 0E7C: 00000000 B1183F11 ; 39F: int List_InsertSorted( LIST* list, void* item, int (*cmp_proc)( void*, void* ) );
 0E80: 00000000 D57B6211 ; 3A0: int ListMenu_SetItemIcon( GUI_LIST*, int Item, wchar_t unk_FFFF, int mode, IMAGEID );
 0E84: 00000000 114AFA10 ; 3A1: void wstrnupr( wchar_t* wstr, int maxlen );
