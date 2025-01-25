@@ -4,6 +4,8 @@
 #define EXT_TABLE 0x20F1E088
 #define HELPER_SIG 0x6FF0
 
+#define DAEMONS_INTERNAL
+
 #define PATH_USER_INT         L"/tpa/user"
 #define PATH_USER_EXT         L"/tpa/user"
 #define PATH_AUDIO_INT        L"/tpa/user/audio"
