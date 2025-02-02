@@ -1,17 +1,16 @@
 #ifndef _MAIN_H_
-  #define _MAIN_H_
+#define _MAIN_H_
 
-typedef struct
+struct MyBOOK: BOOK
 {
-  BOOK  book;
-  GUI *si; 
-  GUI_LIST *calc_menu;
-  GUI_LIST *calc_settings;
-  GUI_ONEOFMANY *angle_sel_list;
-  GUI_ONEOFMANY *autocalc_sel_list;
-  GUI_LIST *calc_insvar;
-  GUI *edit_fmtstr;
-}MyBOOK;
+	GUI *si;
+	GUI_LIST *calc_menu;
+	GUI_LIST *calc_settings;
+	GUI_ONEOFMANY *angle_sel_list;
+	GUI_ONEOFMANY *autocalc_sel_list;
+	GUI_LIST *calc_insvar;
+	GUI *edit_fmtstr;
+};
 
 int MainPageOnCreate(void *, BOOK *bk);
 int MainPageOnClose(void *, BOOK *bk);

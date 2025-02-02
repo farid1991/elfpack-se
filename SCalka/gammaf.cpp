@@ -44,12 +44,12 @@ double gammastirf(double x);
 
 namespace ap
 {
-double pi(){ return 3.14159265358979323846; }  
+double pi(){ return 3.14159265358979323846; }
 int round(double x)
-{return int(floor(x+0.5)); }  
+{return int(floor(x+0.5)); }
 int ifloor(double x)
-{ return int(floor(x)); }  
-  
+{ return int(floor(x)); }
+
 };
 /*************************************************************************
 Вычисление гамма-функции.

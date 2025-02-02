@@ -59,8 +59,6 @@ bool showCellID   = false;
 bool AutoLocation = false;
 
 wchar_t SIwstr[MAX_AUTOLOCATION_LEN] = {0,};
-wchar_t  wsnewdb[MAX_AUTOLOCATION_LEN];
-char snewdb[MAX_AUTOLOCATION_LEN];
 
 u16 currentLAC = 0;
 u16 currentCID = 0;
@@ -84,7 +82,7 @@ bool isUCodeFile = false;
 char * db_buf = 0;
 
 IMAGEID auto_image = NOIMAGE;
-TEXTID CellNameID = empty;
+TEXTID CellNameID = EMPTY_TEXTID;
 
 IMAGEID location_image = NOIMAGE;
 int imageWidth = 0;
@@ -301,34 +299,53 @@ char *load_db_file()
   return db_buf;
 }
 
-int AddTo_db()
+int AddTo_db(wchar_t *wstr)
 {
+  wchar_t wsnewdb[MAX_AUTOLOCATION_LEN];
+  char snewdb[MAX_AUTOLOCATION_LEN], sCIDLAC[16], *p1, *p2;
   int status = 0;
   int f;
 
   getdir(tmpname, cfg_location_file);
-  if ((f = w_fopen(tmpname, WA_Append, 0x1FF, NULL)) >= 0)
-  {
-    if(cfg_cellidmode == 0){
-      snwprintf(wsnewdb, MAX_AUTOLOCATION_LEN - 1, L"[%04X:%04X]:%ls\r\n", currentLAC, currentCID, SIwstr);
-    }
-    else {
-      snwprintf(wsnewdb, MAX_AUTOLOCATION_LEN - 1, L"[%05d:%05d]:%ls\r\n", currentLAC, currentCID, SIwstr);
-    }
-    if(encode_type == 0)
+
+  if (cfg_cellidmode == 0) {
+    snwprintf(wsnewdb, MAX_AUTOLOCATION_LEN - 1, L"[%04X:%04X]:%ls\r\n", currentLAC, currentCID, wstr);
+    sprintf(sCIDLAC, "[%04X:%04X]", currentLAC, currentCID);
+  }
+  else {
+    snwprintf(wsnewdb, MAX_AUTOLOCATION_LEN - 1, L"[%05d:%05d]:%ls\r\n", currentLAC, currentCID, wstr);
+    sprintf(sCIDLAC, "[%05d:%05d]", currentLAC, currentCID);
+  }
+  if(encode_type == 0)
+    unicode2char(snewdb, wsnewdb, MAX_AUTOLOCATION_LEN - 1);
+  else
+    un2gb(snewdb, wsnewdb, MAX_AUTOLOCATION_LEN - 1);
+
+  //поиск такой соты в базе. если уже задано название - надо замен€ть
+  p1 = strstr(db_buf, sCIDLAC);
+  if (p1) {//сота уже наименована
+    if ((f = w_fopen(tmpname, WA_Write|WA_Create|WA_Truncate, 0x1FF, NULL)) >= 0)
     {
-      unicode2char(snewdb, wsnewdb, MAX_AUTOLOCATION_LEN - 1);
+      w_fwrite(f, db_buf, p1 - db_buf);//запись куска базы до текущей соты
+      if (*wstr) //новое им€ задано?
+        w_fwrite(f, snewdb, strlen(snewdb));//запись текущей соты
+      p2 = strstr(p1+1, "[");
+      if (p2)
+        w_fwrite(f, p2, strlen(p2));//запись куска базы до конца
+      w_fclose(f);
+      status = 1;
     }
-    else
+  }
+  else {
+    if (*wstr && (f = w_fopen(tmpname, WA_Append, 0x1FF, NULL)) >= 0)
     {
-      un2gb(snewdb, wsnewdb, MAX_AUTOLOCATION_LEN - 1);
+      w_fwrite(f, snewdb, strlen(snewdb));
+      w_fclose(f);
+      status = 1;
     }
-    w_fwrite(f, snewdb, strlen(snewdb));
-    w_fclose(f);
-    status = 1;
   }
   load_db_file();
-  if (!showCellID) wstrcpy(CellNameStatus, SIwstr);
+  if (!showCellID) wstrcpy(CellNameStatus, wstr);
   return status;
 }
 
@@ -403,7 +420,7 @@ void InitVar()
 {
   InitConfig();
 
-  StatusIndication_SetItemText(SBY_GetStatusIndication(Find_StandbyBook()), wnd, empty);
+  StatusIndication_SetItemText(SBY_GetStatusIndication(Find_StandbyBook()), wnd, EMPTY_TEXTID);
   wnd = items[cfg_location];
 
   NewActionTimeout = cfg_new_action_timeout * 60000;
@@ -521,7 +538,7 @@ void DrawParams(int y)
     GC_PutChar(GC_DISP, cfg_auto_image_x, cfg_auto_image_y - y, 0, 0, auto_image);
   }
 
-  if((cfg_location == 9) && (cfg_show_type & 1) && visible && (CellNameID != empty))
+  if((cfg_location == 9) && (cfg_show_type & 1) && visible && (CellNameID != EMPTY_TEXTID))
   {
     if(cfg_cell_align == RIGHT)
       DrawHighlightID(cfg_cell_font, CellNameID, cfg_cell_align, 1, cfg_cell_y - y, cfg_cell_x, DisplayHeight, cfg_cell_border, cfg_cell_color);
@@ -610,10 +627,10 @@ int CheckCurrentCell()
   }
 
   if ((LocFound == 0) && (AutoLocation == true)) {
-    if(AddTo_db()) LocFound = 1;
+    if(AddTo_db(SIwstr)) LocFound = 1;
   }
 
-  if(CellNameID != empty) TextID_Destroy(CellNameID);
+  if(CellNameID != EMPTY_TEXTID) TextID_Destroy(CellNameID);
   CellNameID = TextID_Create(CellNameStatus,ENC_UCS2,TEXTID_ANY_LEN);
 
   UpdateLocationImage();
@@ -725,7 +742,7 @@ void onTimer(u16 timerID, LPARAM lparam)
   char CSReg;
   get_CellData(&plmn_lac,&rat_ci,&CSReg);
   currentLAC = plmn_lac.LAC[0]<<8|plmn_lac.LAC[1];
-  currentCID  = rat_ci.CI;
+  currentCID = rat_ci.CI;
   if((currentLAC != prevLAC) || (currentCID != prevCID)) CheckCellName();
   if (visible && (cfg_location < 9)) {
     StatusIndication_SetItemText(SBY_GetStatusIndication(Find_StandbyBook()), wnd, TextID_Create(CellNameStatus,ENC_UCS2,TEXTID_ANY_LEN));
@@ -914,7 +931,7 @@ void ShowHideProc()
   {
     if (visible)
     {
-      StatusIndication_SetItemText(SBY_GetStatusIndication(Find_StandbyBook()), wnd, empty);
+      StatusIndication_SetItemText(SBY_GetStatusIndication(Find_StandbyBook()), wnd, EMPTY_TEXTID);
     }
     else
     {
@@ -939,16 +956,27 @@ void OKPressed(BOOK * bk, wchar_t *string, int len)
   CheckCurrentCell();
   BookObj_Hide((BOOK*)myBook,0);
 //  BookObj_SetFocus(Find_StandbyBook(),0);
-  return;
 }
 
 void BackPressed(BOOK * bk, u16 *string, int len)
 {
   MyBOOK * myBook=(MyBOOK *)bk;
   FREE_GUI(myBook->text_input);
+  if (!timer)
+    Timer_ReSet(&timer, 1000, onTimer, 0);
   BookObj_Hide((BOOK*)myBook,0);
 //  BookObj_SetFocus(Find_StandbyBook(),0);
-  return;
+}
+
+void OKPressed2(BOOK * bk, wchar_t *string, int len)
+{
+  MyBOOK * myBook=(MyBOOK *)bk;
+  AddTo_db(string);
+  FREE_GUI(myBook->text_input);
+  CheckCurrentCell();
+  Timer_ReSet(&timer, 1000, onTimer, 0);
+  BookObj_Hide((BOOK*)myBook,0);
+//  BookObj_SetFocus(Find_StandbyBook(),0);
 }
 
 int NewKey(int key, int r1, int mode, LPARAM, DISP_OBJ*)
@@ -1000,6 +1028,28 @@ int NewKey(int key, int r1, int mode, LPARAM, DISP_OBJ*)
             MessageBox(EMPTY_TEXTID, TextID_Create(LG_AUTOLOCATIONOFF,ENC_UCS2,TEXTID_ANY_LEN), NOIMAGE, 1, 5000, 0);
           }
         }
+        else if((key == cfg_setnamekey) && (mode == cfg_setnamekeymode))
+        {
+          if (timer) {
+            Timer_Kill(&timer);
+            timer = 0;
+          }
+          if (MiniGPSBook->text_input) GUIObject_Destroy(MiniGPSBook->text_input);
+          TEXTID text = TextID_Create(CellName,ENC_UCS2,TEXTID_ANY_LEN);
+          MiniGPSBook->text_input = CreateStringInputVA(0,
+                                          VAR_BOOK(MiniGPSBook),
+                                          VAR_STRINP_FIXED_TEXT(TextID_Create(LG_CURRENTLOCATION,ENC_UCS2,TEXTID_ANY_LEN)),
+                                          VAR_STRINP_TEXT(text),
+                                          VAR_STRINP_NEW_LINE(0),
+                                          VAR_STRINP_ENABLE_EMPTY_STR(1),
+                                          VAR_STRINP_MAX_LEN(MAX_AUTOLOCATION_LEN - 1),
+                                          VAR_STRINP_MODE(IT_STRING),
+                                          VAR_OK_PROC(OKPressed2),
+                                          VAR_PREV_ACTION_PROC(BackPressed),
+                                          0);
+          BookObj_SetFocus( &MiniGPSBook->book,0);
+          GUIObject_Show(MiniGPSBook->text_input);
+        }
         InvalidateAll();
       }
     }
@@ -1036,7 +1086,7 @@ void onCloseMiniGPSBook(BOOK * book)
     if(timerNewAction) Timer_Kill(&timerNewAction);
     ModifyKeyHook(NewKey, KEY_HOOK_REMOVE, NULL);
 
-    StatusIndication_SetItemText(SBY_GetStatusIndication(Find_StandbyBook()), wnd, empty);
+    StatusIndication_SetItemText(SBY_GetStatusIndication(Find_StandbyBook()), wnd, EMPTY_TEXTID);
 
     FREE_GUI(mbk->menu);
     FREE_GUI(mbk->text_input);
@@ -1053,10 +1103,10 @@ void onCloseMiniGPSBook(BOOK * book)
       location_image = NOIMAGE;
     }
 
-    if(CellNameID != empty)
+    if(CellNameID != EMPTY_TEXTID)
     {
       TextID_Destroy(CellNameID);
-      CellNameID = empty;
+      CellNameID = EMPTY_TEXTID;
     }
 
     if(db_buf) delete(db_buf);
@@ -1068,22 +1118,22 @@ int MainPageEnter(void *, BOOK *bk)
 {
   myModifyUIHook(STANDBY_NOT_IDLE_EVENT,UI_STANDBY_UNFOCUS_EVENT,StandbyModeDeactivatedHook,1);
   myModifyUIHook(STANDBY_IDLE_EVENT,PHONE_IN_STBY_EVENT,StandbyModeActivatedHook,1);
-  
+
   GUI_status = StatusRow_p();
   Status_desc = DispObject_GetDESC (* GUI_status);
   Status_oldReDraw = DispObject_GetOnRedraw (* GUI_status);
   DISP_DESC_SetOnRedraw (Status_desc, (DISP_OBJ_ONREDRAW_METHOD)Status_ReDraw);
-  
+
   GUI_soft = DispObject_SoftKeys_Get();
   Soft_desc = DispObject_GetDESC (GUI_soft);
   Soft_oldReDraw = DispObject_GetOnRedraw(GUI_soft);
   DISP_DESC_SetOnRedraw(Soft_desc, (DISP_OBJ_ONREDRAW_METHOD)Soft_ReDraw);
-  
+
   GUI_display = GUIObject_GetDispObject( SBY_GetStatusIndication(Find_StandbyBook()) );
   Display_oldReDraw = DispObject_GetOnRedraw(GUI_display);
   Display_desc = DispObject_GetDESC (GUI_display);
   DISP_DESC_SetOnRedraw(Display_desc, Display_ReDraw);
-  
+
   ModifyKeyHook(NewKey, KEY_HOOK_ADD, NULL);
   Timer_ReSet(&timer, 1000, onTimer, 0);
   Timer_ReSet(&timerNewAction, NewActionTimeout, onTimerNewAction, 0);
@@ -1116,7 +1166,7 @@ int main (void)
       SUBPROC(elf_exit);
       return 0;
     }
-    
+
     BookObj_GotoPage((BOOK*)MiniGPSBook,&main_page);
 
   }
@@ -1125,6 +1175,8 @@ int main (void)
 
 /*
 Revision history:
+  2.6.1
+      + ¬озможность переименовать текущую соту
   2.6
       + »зменени€ в структуре конфигурационного файла.
       + ¬озможность вкл/выкл меню.

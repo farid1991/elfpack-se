@@ -1,5 +1,4 @@
 #include "ctype.h"
-#include "string.h"
 
 int atoi(const char *st)
 {
@@ -27,9 +26,9 @@ int str2int(char* s)
 {
         int base=10;
         unsigned int retval=0;
-        
+
         while (_isspace(*s)) ++s;  /* SKIP WHITE SPACE */
-        
+
         if(*s=='$')
         {
                 base=16;
@@ -64,7 +63,7 @@ struct
         int value;
 }cfgmacro []=
 {
-        "AUDIO",DIR_AUDIO
+       "AUDIO",DIR_AUDIO
         ,"IMAGE",DIR_IMAGE
         ,"VIDEO",DIR_VIDEO
         ,"THEME",DIR_THEME
@@ -74,24 +73,25 @@ struct
         ,"ELFS_CONFIG",DIR_ELFS_CONFIG
         ,"INI",DIR_INI
 };
-void extractdir(wchar_t* path,wchar_t* name, const char* src)
+
+void extractdir(wchar_t* path,wchar_t* name, const wchar_t* src)
 {
         int dir=-1;
-        wchar_t dest[256];
+        wchar_t dest[512];
 
         for(int i=0;i<sizeof(cfgmacro)/sizeof(cfgmacro[0]);i++)
         {
-                char tmp[32];
+                wchar_t tmp[32];
                 int sz;
-                sz=sprintf(tmp,"%%%s_INT%%",cfgmacro[i].name);
-                if(!strncmpi(src,tmp,sz))
+                sz=snwprintf(tmp,MAXELEMS(tmp),L"%%%s_INT%%",cfgmacro[i].name);
+                if(!wstrcmpni(src,tmp,sz))
                 {
                         dir=cfgmacro[i].value|MEM_INTERNAL;
                         src+=sz;
                         break;
                 }
-                sz=sprintf(tmp,"%%%s_EXT%%",cfgmacro[i].name);
-                if(!strncmpi(src,tmp,sz))
+                sz=snwprintf(tmp,MAXELEMS(tmp),L"%%%s_EXT%%",cfgmacro[i].name);
+                if(!wstrcmpni(src,tmp,sz))
                 {
                         dir=cfgmacro[i].value|MEM_EXTERNAL;
                         src+=sz;
@@ -102,6 +102,6 @@ void extractdir(wchar_t* path,wchar_t* name, const char* src)
                 wstrcpy(dest,GetDir(dir));
         else
                 dest[0]=0;
-        str2wstr(dest+wstrlen(dest),src);
+        wstrcat(dest+wstrlen(dest),src);
         splitfilename(dest,path,name);
 }

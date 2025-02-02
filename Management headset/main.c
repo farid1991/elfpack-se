@@ -4,6 +4,8 @@
 #include "config_data.h"
 #include "conf_loader.h"
 
+#define ELF_BCFG_CONFIG_EVENT 994
+
 #define ELFNAME "Management"
 #define ABOUT L"Management\nv.3\n\n(c)Ploik & BigHercules"
 
@@ -36,7 +38,7 @@ int OnAccChangedEvent(void* r0,BOOK* b)
 {
   AP = FindBook(get_IsAudioPlayerBook());
   FM = FindBook(get_IsFmRadioBook());
-  
+
  //if (PHF_GetState ())
   //{
   if(!AP && !FM && turn_on==1)
@@ -51,19 +53,19 @@ int OnAccChangedEvent(void* r0,BOOK* b)
     }
    //}
  }
-    return (1);      
+    return (1);
 }
 
 int OffAccChangedEvent(void* r0,BOOK* b)
 {
   AP = FindBook(get_IsAudioPlayerBook());
   FM = FindBook(get_IsFmRadioBook());
-  
+
   if(AP && FM && turn_off==1)
   {
     GoMusic();
   }
-    return (1);    
+    return (1);
 }
 
 int isManagementBook(BOOK * book)
@@ -110,7 +112,7 @@ enum
 int OnCallManagerEvent(void* r0,BOOK* b)
 {
    int eventdata;
-   
+
    switch (GetChipID()&CHIPID_MASK)
    {
    case CHIPID_DB2000:
@@ -185,13 +187,13 @@ int CheckConfig()
   int radio_long_on_press   = 0;
   int player_short_on_press  = 0;
   int player_long_on_press   = 0;
-  
+
   switch(radioOn)
   {
     case SHORT_PRESS: radio_short_on_press++;  break;
     case LONG_PRESS:  radio_long_on_press++;   break;
   }
-  
+
   switch(radioOff)
   {
     case SHORT_PRESS: radio_short_press++;     break;
@@ -218,7 +220,7 @@ int CheckConfig()
     case SHORT_PRESS: player_short_on_press++; break;
     case LONG_PRESS: player_long_on_press++;   break;
   }
-  
+
   switch(playerOff)
   {
     case SHORT_PRESS: player_short_press++;    break;
@@ -241,14 +243,24 @@ int CheckConfig()
   }
 
   if((radio_short_press > 1) || (radio_long_press > 1) || (radio_double_press > 1))
-  err="Неправильно сконфигурировано управление радио!";
-
+    #ifndef ENG
+      err="Неправильно сконфигурировано управление радио!";
+    #else
+      err="Illegal radio configuration!";
+    #endif
   else if((player_short_press > 1) || (player_long_press > 1) || (player_double_press > 1))
-  err="Неправильно сконфигурировано управление плеером!";
-
+    #ifndef ENG
+      err="Неправильно сконфигурировано управление плеером!";
+    #else
+      err="Illegal walkman configuration!";
+    #endif
   else if((radio_short_on_press ==  1 && player_short_on_press ==  1) || (radio_long_on_press == 1 && player_long_on_press ==  1))
-  err="Неправильно сконфигурирован запуск кнопкой!";
-      
+    #ifndef ENG
+      err="Неправильно сконфигурирован запуск кнопкой!";
+    #else
+      err="Illegal key run configuration!";
+    #endif
+
   if(err)
   {
     snwprintf(temp, MAXELEMS(temp), _T("Error!\n%s"),err);
@@ -271,11 +283,39 @@ static int onReconfigElf(void *mess ,BOOK *book)
   return(result);
 }
 
+int onBcfgConfig(void* mess,BOOK* b)
+{
+  FSTAT _fstat;
+  wchar_t path[256];
+
+  if(fstat(GetDir(DIR_ELFS|MEM_INTERNAL),L"BcfgEdit.elf",&_fstat)==0)
+  {
+    wstrcpy(path,GetDir(DIR_ELFS|MEM_INTERNAL));
+  }
+  else if(fstat(GetDir(DIR_ELFS|MEM_EXTERNAL),L"BcfgEdit.elf",&_fstat)==0)
+  {
+    wstrcpy(path,GetDir(DIR_ELFS|MEM_EXTERNAL));
+  }
+  else
+  {
+    #ifndef ENG
+      MessageBox(EMPTY_TEXTID, STR("BcfgEdit.elf не найден!"), NOIMAGE, 1 ,5000, 0);
+    #else
+      MessageBox(EMPTY_TEXTID, STR("BcfgEdit.elf not found!"), NOIMAGE, 1 ,5000, 0);
+    #endif
+    return (1);
+  }
+  wstrcat(path,L"/BcfgEdit.elf");
+  elfload(path,(void*)successed_config_path,(void*)successed_config_name,0);
+  return (1);
+}
+
 const PAGE_MSG Management_PageEvents[]@ "DYN_PAGE" =
 {
          ELF_TERMINATE_EVENT,                          TerminateElf,
          ELF_SHOW_INFO_EVENT,                          ShowAuthorInfo,
          ELF_RECONFIG_EVENT,                           onReconfigElf,
+         ELF_BCFG_CONFIG_EVENT,                        onBcfgConfig,
          ON_CALLMANAGER_EVENT_TAG,                     OnCallManagerEvent,
          ACCESSORIES_ACCESSORY_CONNECTED_EVENT_TAG,    OnAccChangedEvent,
          ACCESSORIES_ACCESSORY_DISCONNECTED_EVENT_TAG, OffAccChangedEvent,
@@ -326,16 +366,21 @@ void onTimer(u16 timerID, LPARAM lparam)
   dbl=0;
 }
 
-int NewKey(int key, int r1 , int mode, LPARAM, DISP_OBJ*)
+int NewKey(int key, int r1 , int mode, LPARAM, DISP_OBJ* disp)
 {
   AP = FindBook(get_IsAudioPlayerBook());
   FM = FindBook(get_IsFmRadioBook());
   if (key==KeyControl)
   {
+    if ( !strcmp(DispObject_GetName(disp),"Keylock") && mode == KBD_SHORT_PRESS ) return KEY_VOL_UP;
     if (mode==KBD_SHORT_RELEASE)
     {
-      if (!dbl) timer=Timer_Set(detectTime,onTimer,0);
-      dbl++;
+      if (detectTime<100) MakeAction(SHORT_PRESS);
+      else
+      {
+        if (!dbl) timer=Timer_Set(detectTime,onTimer,0);
+        dbl++;
+      }
     }
     if (mode==KBD_LONG_PRESS)
     {
@@ -377,7 +422,11 @@ int main (void)
   BOOK* alreadyrunned=FindBook(isManagementBook);
   if(alreadyrunned)
   {
-    MessageBox(EMPTY_TEXTID, STR("Management headset\nуже запущен"), NOIMAGE, 1 ,5000, 0);
+    #ifndef ENG
+      MessageBox(EMPTY_TEXTID, STR("Management headset\nуже запущен"), NOIMAGE, 1 ,5000, 0);
+    #else
+      MessageBox(EMPTY_TEXTID, STR("Management headset\nalready runned"), NOIMAGE, 1 ,5000, 0);
+    #endif
     SUBPROC(elf_exit);
   }
   else
@@ -388,7 +437,7 @@ int main (void)
       SUBPROC(elf_exit);
       return 0;
     }
-    
+
     ManagementBook = new BOOK;
     if(!CreateBook(ManagementBook, onCloseManagementBook, &base_page, ELFNAME, -1, 0))
     {

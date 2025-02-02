@@ -1,0 +1,597 @@
+#include "..\\include\Lib_Clara.h"
+#include "..\\include\cfg_items.h"
+#include "cfg_v2_9.h"
+#include "cfg_v2_10.h"
+
+void _merge_from_v2_9(v2_10_config_t *newcfg, v2_9_config_t *oldcfg)
+{
+//Картинки ...
+//Картинка 1
+  newcfg->cfg_image1_show = oldcfg->cfg_image1_show;
+  newcfg->cfg_image1_x = oldcfg->cfg_image1_x;
+  newcfg->cfg_image1_y = oldcfg->cfg_image1_y;
+  str2wstr(newcfg->cfg_file1, oldcfg->cfg_file1);
+//Картинка 2
+  newcfg->cfg_image2_show = oldcfg->cfg_image2_show;
+  newcfg->cfg_image2_x = oldcfg->cfg_image2_x;
+  newcfg->cfg_image2_y = oldcfg->cfg_image2_y;
+  str2wstr(newcfg->cfg_file2, oldcfg->cfg_file2);
+//Картинка 3
+  newcfg->cfg_image3_show = oldcfg->cfg_image3_show;
+  newcfg->cfg_image3_x = oldcfg->cfg_image3_x;
+  newcfg->cfg_image3_y = oldcfg->cfg_image3_y;
+  str2wstr(newcfg->cfg_file3, oldcfg->cfg_file3);
+//Картинка 4
+  newcfg->cfg_image4_show = oldcfg->cfg_image4_show;
+  newcfg->cfg_image4_x = oldcfg->cfg_image4_x;
+  newcfg->cfg_image4_y = oldcfg->cfg_image4_y;
+  str2wstr(newcfg->cfg_file4, oldcfg->cfg_file4);
+//Картинка 5
+  newcfg->cfg_image5_show = oldcfg->cfg_image5_show;
+  newcfg->cfg_image5_x = oldcfg->cfg_image5_x;
+  newcfg->cfg_image5_y = oldcfg->cfg_image5_y;
+  str2wstr(newcfg->cfg_file5, oldcfg->cfg_file5);
+//Картинка 6
+  newcfg->cfg_image6_show = oldcfg->cfg_image6_show;
+  newcfg->cfg_image6_x = oldcfg->cfg_image6_x;
+  newcfg->cfg_image6_y = oldcfg->cfg_image6_y;
+  str2wstr(newcfg->cfg_file6, oldcfg->cfg_file6);
+  newcfg->cfg_image6_slideshow = oldcfg->cfg_image6_slideshow;
+  str2wstr(newcfg->cfg_folder6, oldcfg->cfg_folder6);
+  newcfg->cfg_slideshow_time = oldcfg->cfg_slideshow_time;
+
+//Время/Дата/День
+//Время 1...
+  newcfg->cfg_clock_show = oldcfg->cfg_clock_show;
+  newcfg->cfg_clock_format = oldcfg->cfg_clock_format;
+  newcfg->cfg_seconds = oldcfg->cfg_seconds;
+  newcfg->cfg_seconds_font = oldcfg->cfg_seconds_font;
+  newcfg->cfg_seconds_offset_y = oldcfg->cfg_seconds_offset_y;
+  newcfg->cfg_remove_clock = oldcfg->cfg_remove_clock;
+  newcfg->cfg_clock_font = oldcfg->cfg_clock_font;
+  newcfg->cfg_clock_color = oldcfg->cfg_clock_color;
+  newcfg->cfg_clock_border = oldcfg->cfg_clock_border;
+  newcfg->cfg_clock_align = oldcfg->cfg_clock_align;
+  newcfg->cfg_clock_x = oldcfg->cfg_clock_x;
+  newcfg->cfg_clock_y = oldcfg->cfg_clock_y;
+//Время 2...
+  newcfg->cfg_clock2_show = oldcfg->cfg_clock2_show;
+  newcfg->cfg_clock2_format = oldcfg->cfg_clock2_format;
+  newcfg->cfg_seconds2 = oldcfg->cfg_seconds2;
+  newcfg->cfg_seconds2_font = oldcfg->cfg_seconds2_font;
+  newcfg->cfg_seconds2_offset_y = oldcfg->cfg_seconds2_offset_y;
+  newcfg->cfg_clock2_font = oldcfg->cfg_clock2_font;
+  newcfg->cfg_clock2_color = oldcfg->cfg_clock2_color;
+  newcfg->cfg_clock2_border = oldcfg->cfg_clock2_border;
+  newcfg->cfg_clock2_align = oldcfg->cfg_clock2_align;
+  newcfg->cfg_clock2_x = oldcfg->cfg_clock2_x;
+  newcfg->cfg_clock2_y = oldcfg->cfg_clock2_y;
+//Дата...
+  newcfg->cfg_date_show = oldcfg->cfg_date_show;
+  newcfg->cfg_date_format = oldcfg->cfg_date_format;
+  newcfg->cfg_remove_year = oldcfg->cfg_remove_year;
+  newcfg->cfg_remove_date = oldcfg->cfg_remove_date;
+  newcfg->cfg_date_font = oldcfg->cfg_date_font;
+  newcfg->cfg_date_color = oldcfg->cfg_date_color;
+  newcfg->cfg_date_border = oldcfg->cfg_date_border;
+  newcfg->cfg_date_align = oldcfg->cfg_date_align;
+  newcfg->cfg_date_x = oldcfg->cfg_date_x;
+  newcfg->cfg_date_y = oldcfg->cfg_date_y;
+//День...
+  newcfg->cfg_day_show = oldcfg->cfg_day_show;
+  newcfg->cfg_day_mode = oldcfg->cfg_day_mode;
+  newcfg->cfg_day_format = oldcfg->cfg_day_format;
+  newcfg->cfg_day_font = oldcfg->cfg_day_font;
+  newcfg->cfg_day_color = oldcfg->cfg_day_color;
+  newcfg->cfg_day_border = oldcfg->cfg_day_border;
+  newcfg->cfg_day_align = oldcfg->cfg_day_align;
+  newcfg->cfg_day_x = oldcfg->cfg_day_x;
+  newcfg->cfg_day_y = oldcfg->cfg_day_y;
+  newcfg->cfg_custom_day = oldcfg->cfg_custom_day;
+  wstrcpy(newcfg->cfg_sun, oldcfg->cfg_sun);
+  wstrcpy(newcfg->cfg_mon, oldcfg->cfg_mon);
+  wstrcpy(newcfg->cfg_tue, oldcfg->cfg_tue);
+  wstrcpy(newcfg->cfg_wed, oldcfg->cfg_wed);
+  wstrcpy(newcfg->cfg_thu, oldcfg->cfg_thu);
+  wstrcpy(newcfg->cfg_fri, oldcfg->cfg_fri);
+  wstrcpy(newcfg->cfg_sat, oldcfg->cfg_sat);
+
+//Heap/Батарея/Температура
+//Heap...
+  newcfg->cfg_heap_show = oldcfg->cfg_heap_show;
+  newcfg->cfg_heap_format = oldcfg->cfg_heap_format;
+  newcfg->cfg_heap_font = oldcfg->cfg_heap_font;
+  newcfg->cfg_heap_color = oldcfg->cfg_heap_color;
+  newcfg->cfg_heap_border = oldcfg->cfg_heap_border;
+  newcfg->cfg_heap_align = oldcfg->cfg_heap_align;
+  newcfg->cfg_heap_x = oldcfg->cfg_heap_x;
+  newcfg->cfg_heap_y = oldcfg->cfg_heap_y;
+//Емкость батареи...
+  newcfg->cfg_batt_show = oldcfg->cfg_batt_show;
+  newcfg->cfg_percent = oldcfg->cfg_percent;
+  newcfg->cfg_percent_font = oldcfg->cfg_percent_font;
+  newcfg->cfg_percent_offset_y = oldcfg->cfg_percent_offset_y;
+  newcfg->cfg_batt_font = oldcfg->cfg_batt_font;
+  newcfg->cfg_batt_color = oldcfg->cfg_batt_color;
+  newcfg->cfg_batt_border = oldcfg->cfg_batt_border;
+  newcfg->cfg_batt_align = oldcfg->cfg_batt_align;
+  newcfg->cfg_batt_x = oldcfg->cfg_batt_x;
+  newcfg->cfg_batt_y = oldcfg->cfg_batt_y;
+  newcfg->cfg_batt_bar_show = oldcfg->cfg_batt_bar_show;
+  newcfg->cfg_batt_bar_images = oldcfg->cfg_batt_bar_images;
+  newcfg->cfg_batt_bar = oldcfg->cfg_batt_bar;
+  newcfg->cfg_batt_bar_border = oldcfg->cfg_batt_bar_border;
+  newcfg->cfg_batt_empty_color = oldcfg->cfg_batt_empty_color;
+  newcfg->cfg_batt_0_color = oldcfg->cfg_batt_0_color;
+  newcfg->cfg_batt_10_color = oldcfg->cfg_batt_10_color;
+  newcfg->cfg_batt_20_color = oldcfg->cfg_batt_20_color;
+  newcfg->cfg_batt_30_color = oldcfg->cfg_batt_30_color;
+  newcfg->cfg_batt_40_color = oldcfg->cfg_batt_40_color;
+  newcfg->cfg_batt_50_color = oldcfg->cfg_batt_50_color;
+  newcfg->cfg_batt_60_color = oldcfg->cfg_batt_60_color;
+  newcfg->cfg_batt_70_color = oldcfg->cfg_batt_70_color;
+  newcfg->cfg_batt_80_color = oldcfg->cfg_batt_80_color;
+  newcfg->cfg_batt_90_color = oldcfg->cfg_batt_90_color;
+  newcfg->cfg_batt_100_color = oldcfg->cfg_batt_100_color;
+
+  newcfg->cfg_batt_bar_x = oldcfg->cfg_batt_bar_x;
+  newcfg->cfg_batt_bar_y = oldcfg->cfg_batt_bar_y;
+  str2wstr(newcfg->cfg_batt_0_file, oldcfg->cfg_batt_0_file);
+  str2wstr(newcfg->cfg_batt_5_file, oldcfg->cfg_batt_5_file);
+  str2wstr(newcfg->cfg_batt_15_file, oldcfg->cfg_batt_15_file);
+  str2wstr(newcfg->cfg_batt_25_file, oldcfg->cfg_batt_25_file);
+  str2wstr(newcfg->cfg_batt_35_file, oldcfg->cfg_batt_35_file);
+  str2wstr(newcfg->cfg_batt_45_file, oldcfg->cfg_batt_45_file);
+  str2wstr(newcfg->cfg_batt_55_file, oldcfg->cfg_batt_55_file);
+  str2wstr(newcfg->cfg_batt_65_file, oldcfg->cfg_batt_65_file);
+  str2wstr(newcfg->cfg_batt_75_file, oldcfg->cfg_batt_75_file);
+  str2wstr(newcfg->cfg_batt_85_file, oldcfg->cfg_batt_85_file);
+  str2wstr(newcfg->cfg_batt_100_file, oldcfg->cfg_batt_100_file);
+
+//Ток заряда...
+  newcfg->cfg_current_show = oldcfg->cfg_current_show;
+  newcfg->cfg_current_font = oldcfg->cfg_current_font;
+  newcfg->cfg_current_color = oldcfg->cfg_current_color;
+  newcfg->cfg_current_border = oldcfg->cfg_current_border;
+  newcfg->cfg_current_align = oldcfg->cfg_current_align;
+  newcfg->cfg_current_x = oldcfg->cfg_current_x;
+  newcfg->cfg_current_y = oldcfg->cfg_current_y;
+//Индикация заряда...
+  newcfg->cfg_batt_charge_show = oldcfg->cfg_batt_charge_show;
+  newcfg->cfg_batt_charge_x = oldcfg->cfg_batt_charge_x;
+  newcfg->cfg_batt_charge_y = oldcfg->cfg_batt_charge_y;
+  str2wstr(newcfg->cfg_batt_charge_file, oldcfg->cfg_batt_charge_file);
+//Температура батареи...
+  newcfg->cfg_batt_temp_show = oldcfg->cfg_batt_temp_show;
+  newcfg->cfg_charging_only = oldcfg->cfg_charging_only;
+  newcfg->cfg_batt_temp_font = oldcfg->cfg_batt_temp_font;
+  newcfg->cfg_batt_temp_color = oldcfg->cfg_batt_temp_color;
+  newcfg->cfg_batt_temp_border = oldcfg->cfg_batt_temp_border;
+  newcfg->cfg_batt_temp_align = oldcfg->cfg_batt_temp_align;
+  newcfg->cfg_batt_temp_x = oldcfg->cfg_batt_temp_x;
+  newcfg->cfg_batt_temp_y = oldcfg->cfg_batt_temp_y;
+//Температура телефона...
+  newcfg->cfg_temp_show = oldcfg->cfg_temp_show;
+  newcfg->cfg_temp_font = oldcfg->cfg_temp_font;
+  newcfg->cfg_temp_color = oldcfg->cfg_temp_color;
+  newcfg->cfg_temp_border = oldcfg->cfg_temp_border;
+  newcfg->cfg_temp_align = oldcfg->cfg_temp_align;
+  newcfg->cfg_temp_x = oldcfg->cfg_temp_x;
+  newcfg->cfg_temp_y = oldcfg->cfg_temp_y;
+//Дополнительно...
+  newcfg->cfg_refresh_heap = oldcfg->cfg_refresh_heap;
+  newcfg->cfg_refresh_batt_temp = oldcfg->cfg_refresh_batt_temp;
+
+//Инфо о памяти...
+//Телефон...
+  newcfg->cfg_phone_show = oldcfg->cfg_phone_show;
+  newcfg->cfg_phone_format = oldcfg->cfg_phone_format;
+  newcfg->cfg_phone_fractional = oldcfg->cfg_phone_fractional;
+  wstrcpy(newcfg->cfg_phone_msg, oldcfg->cfg_phone_msg);
+  newcfg->cfg_phone_font = oldcfg->cfg_phone_font;
+  newcfg->cfg_phone_color = oldcfg->cfg_phone_color;
+  newcfg->cfg_phone_border = oldcfg->cfg_phone_border;
+  newcfg->cfg_phone_align = oldcfg->cfg_phone_align;
+  newcfg->cfg_phone_x = oldcfg->cfg_phone_x;
+  newcfg->cfg_phone_y = oldcfg->cfg_phone_y;
+  newcfg->cfg_phone_bar_show = oldcfg->cfg_phone_bar_show;
+  newcfg->cfg_phone_bar = oldcfg->cfg_phone_bar;
+  newcfg->cfg_phone_used_color = oldcfg->cfg_phone_used_color;
+  newcfg->cfg_phone_free_color = oldcfg->cfg_phone_free_color;
+  newcfg->cfg_phone_bar_border = oldcfg->cfg_phone_bar_border;
+//Карта памяти...
+  newcfg->cfg_card_show = oldcfg->cfg_card_show;
+  newcfg->cfg_card_format = oldcfg->cfg_card_format;
+  newcfg->cfg_card_fractional = oldcfg->cfg_card_fractional;
+  wstrcpy(newcfg->cfg_card_msg, oldcfg->cfg_card_msg);
+  newcfg->cfg_card_font = oldcfg->cfg_card_font;
+  newcfg->cfg_card_color = oldcfg->cfg_card_color;
+  newcfg->cfg_card_border = oldcfg->cfg_card_border;
+  newcfg->cfg_card_align = oldcfg->cfg_card_align;
+  newcfg->cfg_card_x = oldcfg->cfg_card_x;
+  newcfg->cfg_card_y = oldcfg->cfg_card_y;
+  newcfg->cfg_card_bar_show = oldcfg->cfg_card_bar_show;
+  newcfg->cfg_card_bar = oldcfg->cfg_card_bar;
+  newcfg->cfg_card_used_color = oldcfg->cfg_card_used_color;
+  newcfg->cfg_card_free_color = oldcfg->cfg_card_free_color;
+  newcfg->cfg_card_bar_border = oldcfg->cfg_card_bar_border;
+
+  newcfg->cfg_mem_update = oldcfg->cfg_mem_update;
+
+//FM радио/Плеер = oldcfg->//FM радио/Плеер
+//FM радио...
+//Частота станции...
+  newcfg->cfg_fm_show = oldcfg->cfg_fm_show;
+  newcfg->cfg_fm_name_first = oldcfg->cfg_fm_name_first;
+  newcfg->cfg_fm_font = oldcfg->cfg_fm_font;
+  newcfg->cfg_fm_color = oldcfg->cfg_fm_color;
+  newcfg->cfg_fm_border = oldcfg->cfg_fm_border;
+  newcfg->cfg_fm_align = oldcfg->cfg_fm_align;
+  newcfg->cfg_fm_x = oldcfg->cfg_fm_x;
+  newcfg->cfg_fm_y = oldcfg->cfg_fm_y;
+  wstrcpy(newcfg->cfg_fm_msg, oldcfg->cfg_fm_msg);
+//Режим стерео...
+  newcfg->cfg_fm_mode_show = oldcfg->cfg_fm_mode_show;
+  newcfg->cfg_fm_mode_font = oldcfg->cfg_fm_mode_font;
+  newcfg->cfg_fm_mode_color = oldcfg->cfg_fm_mode_color;
+  newcfg->cfg_fm_mode_border = oldcfg->cfg_fm_mode_border;
+  newcfg->cfg_fm_mode_align = oldcfg->cfg_fm_mode_align;
+  newcfg->cfg_fm_mode_x = oldcfg->cfg_fm_mode_x;
+  newcfg->cfg_fm_mode_y = oldcfg->cfg_fm_mode_y;
+//RDS данные...
+  newcfg->cfg_fm_rdsdata_show = oldcfg->cfg_fm_rdsdata_show;
+  newcfg->cfg_fm_rdsdata_font = oldcfg->cfg_fm_rdsdata_font;
+  newcfg->cfg_fm_rdsdata_color = oldcfg->cfg_fm_rdsdata_color;
+  newcfg->cfg_fm_rdsdata_border = oldcfg->cfg_fm_rdsdata_border;
+  newcfg->cfg_fm_rdsdata_align = oldcfg->cfg_fm_rdsdata_align;
+  newcfg->cfg_fm_rdsdata_x = oldcfg->cfg_fm_rdsdata_x;
+  newcfg->cfg_fm_rdsdata_y = oldcfg->cfg_fm_rdsdata_y;
+//Картинка...
+  newcfg->cfg_fm_image_show = oldcfg->cfg_fm_image_show;
+  newcfg->cfg_fm_image_x = oldcfg->cfg_fm_image_x;
+  newcfg->cfg_fm_image_y = oldcfg->cfg_fm_image_y;
+  str2wstr(newcfg->cfg_fm_file, oldcfg->cfg_fm_file);
+//Плеер...
+//Название песни
+  newcfg->cfg_player_title_show = oldcfg->cfg_player_title_show;
+  newcfg->cfg_player_title_font = oldcfg->cfg_player_title_font;
+  newcfg->cfg_player_title_color = oldcfg->cfg_player_title_color;
+  newcfg->cfg_player_title_border = oldcfg->cfg_player_title_border;
+  newcfg->cfg_player_title_align = oldcfg->cfg_player_title_align;
+  newcfg->cfg_player_title_x = oldcfg->cfg_player_title_x;
+  newcfg->cfg_player_title_y = oldcfg->cfg_player_title_y;
+  newcfg->cfg_player_title_scroll = oldcfg->cfg_player_title_scroll;
+//Альбом
+  newcfg->cfg_player_album_show = oldcfg->cfg_player_album_show;
+  newcfg->cfg_player_album_font = oldcfg->cfg_player_album_font;
+  newcfg->cfg_player_album_color = oldcfg->cfg_player_album_color;
+  newcfg->cfg_player_album_border = oldcfg->cfg_player_album_border;
+  newcfg->cfg_player_album_align = oldcfg->cfg_player_album_align;
+  newcfg->cfg_player_album_x = oldcfg->cfg_player_album_x;
+  newcfg->cfg_player_album_y = oldcfg->cfg_player_album_y;
+  newcfg->cfg_player_album_scroll = oldcfg->cfg_player_album_scroll;
+//Исполнитель
+  newcfg->cfg_player_artist_show = oldcfg->cfg_player_artist_show;
+  newcfg->cfg_player_artist_font = oldcfg->cfg_player_artist_font;
+  newcfg->cfg_player_artist_color = oldcfg->cfg_player_artist_color;
+  newcfg->cfg_player_artist_border = oldcfg->cfg_player_artist_border;
+  newcfg->cfg_player_artist_align = oldcfg->cfg_player_artist_align;
+  newcfg->cfg_player_artist_x = oldcfg->cfg_player_artist_x;
+  newcfg->cfg_player_artist_y = oldcfg->cfg_player_artist_y;
+  newcfg->cfg_player_artist_scroll = oldcfg->cfg_player_artist_scroll;
+//Год
+  newcfg->cfg_player_year_show = oldcfg->cfg_player_year_show;
+  newcfg->cfg_player_year_font = oldcfg->cfg_player_year_font;
+  newcfg->cfg_player_year_color = oldcfg->cfg_player_year_color;
+  newcfg->cfg_player_year_border = oldcfg->cfg_player_year_border;
+  newcfg->cfg_player_year_align = oldcfg->cfg_player_year_align;
+  newcfg->cfg_player_year_x = oldcfg->cfg_player_year_x;
+  newcfg->cfg_player_year_y = oldcfg->cfg_player_year_y;
+  newcfg->cfg_player_year_scroll = oldcfg->cfg_player_year_scroll;
+//Жанр
+  newcfg->cfg_player_genre_show = oldcfg->cfg_player_genre_show;
+  newcfg->cfg_player_genre_font = oldcfg->cfg_player_genre_font;
+  newcfg->cfg_player_genre_color = oldcfg->cfg_player_genre_color;
+  newcfg->cfg_player_genre_border = oldcfg->cfg_player_genre_border;
+  newcfg->cfg_player_genre_align = oldcfg->cfg_player_genre_align;
+  newcfg->cfg_player_genre_x = oldcfg->cfg_player_genre_x;
+  newcfg->cfg_player_genre_y = oldcfg->cfg_player_genre_y;
+  newcfg->cfg_player_genre_scroll = oldcfg->cfg_player_genre_scroll;
+//Частота дискретизации
+  newcfg->cfg_player_frequency_show = oldcfg->cfg_player_frequency_show;
+  newcfg->cfg_player_frequency_font = oldcfg->cfg_player_frequency_font;
+  newcfg->cfg_player_frequency_color = oldcfg->cfg_player_frequency_color;
+  newcfg->cfg_player_frequency_border = oldcfg->cfg_player_frequency_border;
+  newcfg->cfg_player_frequency_align = oldcfg->cfg_player_frequency_align;
+  newcfg->cfg_player_frequency_x = oldcfg->cfg_player_frequency_x;
+  newcfg->cfg_player_frequency_y = oldcfg->cfg_player_frequency_y;
+  newcfg->cfg_player_frequency_scroll = oldcfg->cfg_player_frequency_scroll;
+//Битрейт
+  newcfg->cfg_player_bitrate_show = oldcfg->cfg_player_bitrate_show;
+  newcfg->cfg_player_bitrate_font = oldcfg->cfg_player_bitrate_font;
+  newcfg->cfg_player_bitrate_color = oldcfg->cfg_player_bitrate_color;
+  newcfg->cfg_player_bitrate_border = oldcfg->cfg_player_bitrate_border;
+  newcfg->cfg_player_bitrate_align = oldcfg->cfg_player_bitrate_align;
+  newcfg->cfg_player_bitrate_x = oldcfg->cfg_player_bitrate_x;
+  newcfg->cfg_player_bitrate_y = oldcfg->cfg_player_bitrate_y;
+  newcfg->cfg_player_bitrate_scroll = oldcfg->cfg_player_bitrate_scroll;
+//Каналы
+  newcfg->cfg_player_channels_show = oldcfg->cfg_player_channels_show;
+  newcfg->cfg_player_channels_font = oldcfg->cfg_player_channels_font;
+  newcfg->cfg_player_channels_color = oldcfg->cfg_player_channels_color;
+  newcfg->cfg_player_channels_border = oldcfg->cfg_player_channels_border;
+  newcfg->cfg_player_channels_align = oldcfg->cfg_player_channels_align;
+  newcfg->cfg_player_channels_x = oldcfg->cfg_player_channels_x;
+  newcfg->cfg_player_channels_y = oldcfg->cfg_player_channels_y;
+  newcfg->cfg_player_channels_scroll = oldcfg->cfg_player_channels_scroll;
+//Длительность...
+  newcfg->cfg_player_fulltime_show = oldcfg->cfg_player_fulltime_show;
+  newcfg->cfg_player_fulltime_font = oldcfg->cfg_player_fulltime_font;
+  newcfg->cfg_player_fulltime_color = oldcfg->cfg_player_fulltime_color;
+  newcfg->cfg_player_fulltime_border = oldcfg->cfg_player_fulltime_border;
+  newcfg->cfg_player_fulltime_align = oldcfg->cfg_player_fulltime_align;
+  newcfg->cfg_player_fulltime_x = oldcfg->cfg_player_fulltime_x;
+  newcfg->cfg_player_fulltime_y = oldcfg->cfg_player_fulltime_y;
+  newcfg->cfg_player_fulltime_scroll = oldcfg->cfg_player_fulltime_scroll;
+//Текущее/оставшееся время...
+  newcfg->cfg_player_curtime_show = oldcfg->cfg_player_curtime_show;
+  newcfg->cfg_player_endtime_show = oldcfg->cfg_player_endtime_show;
+  newcfg->cfg_player_curtime_font = oldcfg->cfg_player_curtime_font;
+  newcfg->cfg_player_curtime_color = oldcfg->cfg_player_curtime_color;
+  newcfg->cfg_player_curtime_border = oldcfg->cfg_player_curtime_border;
+  newcfg->cfg_player_curtime_align = oldcfg->cfg_player_curtime_align;
+  newcfg->cfg_player_curtime_x = oldcfg->cfg_player_curtime_x;
+  newcfg->cfg_player_curtime_y = oldcfg->cfg_player_curtime_y;
+  newcfg->cfg_player_curtime_scroll = oldcfg->cfg_player_curtime_scroll;
+//Полоска...
+  newcfg->cfg_player_timebar_show = oldcfg->cfg_player_timebar_show;
+  newcfg->cfg_player_timebar = oldcfg->cfg_player_timebar;
+  newcfg->cfg_player_timebar_cur_color = oldcfg->cfg_player_timebar_cur_color;
+  newcfg->cfg_player_timebar_rem_color = oldcfg->cfg_player_timebar_rem_color;
+  newcfg->cfg_player_timebar_border = oldcfg->cfg_player_timebar_border;
+//Обложка
+  newcfg->cfg_player_cover_show = oldcfg->cfg_player_cover_show;
+  newcfg->cfg_player_cover = oldcfg->cfg_player_cover;
+  strcpy(newcfg->cfg_player_cover_file, oldcfg->cfg_player_cover_file);
+  newcfg->cfg_player_cover_under_image = oldcfg->cfg_player_cover_under_image;
+//Картинка
+  newcfg->cfg_player_image_show = oldcfg->cfg_player_image_show;
+  newcfg->cfg_player_image_x = oldcfg->cfg_player_image_x;
+  newcfg->cfg_player_image_y = oldcfg->cfg_player_image_y;
+  str2wstr(newcfg->cfg_player_file, oldcfg->cfg_player_file);
+//Отключать при включении музыки
+//Картинки ...
+  newcfg->cfg_image1_not_show_if_player = oldcfg->cfg_image1_not_show_if_player;
+  newcfg->cfg_image2_not_show_if_player = oldcfg->cfg_image2_not_show_if_player;
+  newcfg->cfg_image3_not_show_if_player = oldcfg->cfg_image3_not_show_if_player;
+  newcfg->cfg_image4_not_show_if_player = oldcfg->cfg_image4_not_show_if_player;
+  newcfg->cfg_image5_not_show_if_player = oldcfg->cfg_image5_not_show_if_player;
+  newcfg->cfg_image6_not_show_if_player = oldcfg->cfg_image6_not_show_if_player;
+//Время/Дата/День
+  newcfg->cfg_clock_not_show_if_player = oldcfg->cfg_clock_not_show_if_player;
+  newcfg->cfg_clock2_not_show_if_player = oldcfg->cfg_clock2_not_show_if_player;
+  newcfg->cfg_orig_clock_not_show_if_player = oldcfg->cfg_orig_clock_not_show_if_player;
+  newcfg->cfg_date_not_show_if_player = oldcfg->cfg_date_not_show_if_player;
+  newcfg->cfg_orig_date_not_show_if_player = oldcfg->cfg_orig_date_not_show_if_player;
+  newcfg->cfg_day_not_show_if_player = oldcfg->cfg_day_not_show_if_player;
+//Heap/Батарея/Температура
+  newcfg->cfg_heap_not_show_if_player = oldcfg->cfg_heap_not_show_if_player;
+  newcfg->cfg_batt_not_show_if_player = oldcfg->cfg_batt_not_show_if_player;
+  newcfg->cfg_batt_bar_not_show_if_player = oldcfg->cfg_batt_bar_not_show_if_player;
+  newcfg->cfg_current_not_show_if_player = oldcfg->cfg_current_not_show_if_player;
+  newcfg->cfg_batt_charge_not_show_if_player = oldcfg->cfg_batt_charge_not_show_if_player;
+  newcfg->cfg_batt_temp_not_show_if_player = oldcfg->cfg_batt_temp_not_show_if_player;
+  newcfg->cfg_temp_not_show_if_player = oldcfg->cfg_temp_not_show_if_player;
+//Инфо о памяти...
+  newcfg->cfg_phone_not_show_if_player = oldcfg->cfg_phone_not_show_if_player;
+  newcfg->cfg_card_not_show_if_player = oldcfg->cfg_card_not_show_if_player;
+//Сеть...
+  newcfg->cfg_network_rssi_not_show_if_player = oldcfg->cfg_network_rssi_not_show_if_player;
+  newcfg->cfg_network_rssi_percent_not_show_if_player = 0;
+  newcfg->cfg_network_not_show_if_player = oldcfg->cfg_network_not_show_if_player;
+//Приложения...
+  newcfg->cfg_app_not_show_if_player = oldcfg->cfg_app_not_show_if_player;
+  newcfg->cfg_app_book_not_show_if_player = 0;
+  newcfg->cfg_app_elf_not_show_if_player = 0;
+  newcfg->cfg_app_java_not_show_if_player = 0;
+//Свои сообщения...
+  newcfg->cfg_msg1_not_show_if_player = oldcfg->cfg_msg1_not_show_if_player;
+  newcfg->cfg_msg2_not_show_if_player = oldcfg->cfg_msg2_not_show_if_player;
+  newcfg->cfg_msg3_not_show_if_player = oldcfg->cfg_msg3_not_show_if_player;
+  newcfg->cfg_msg4_not_show_if_player = oldcfg->cfg_msg4_not_show_if_player;
+  newcfg->cfg_msg5_not_show_if_player = oldcfg->cfg_msg5_not_show_if_player;
+  newcfg->cfg_msg6_not_show_if_player = oldcfg->cfg_msg6_not_show_if_player;
+  newcfg->cfg_soft_key_not_show_if_player = oldcfg->cfg_soft_key_not_show_if_player;
+//Лого оператора...
+  newcfg->cfg_remove_operator_1st_line_if_player = oldcfg->cfg_remove_operator_1st_line_if_player;
+  newcfg->cfg_remove_operator_2nd_line_if_player = oldcfg->cfg_remove_operator_2nd_line_if_player;
+  newcfg->cfg_remove_operator_3rd_line_if_player = oldcfg->cfg_remove_operator_3rd_line_if_player;
+//Прокрутка
+  newcfg->cfg_player_scroll_speed = oldcfg->cfg_player_scroll_speed;
+  newcfg->cfg_player_scroll_delay = oldcfg->cfg_player_scroll_delay;
+//Какие функции использоват для получения ID3
+  newcfg->cfg_id3_use_int_func = oldcfg->cfg_id3_use_int_func;
+  newcfg-> cfg_refresh_media = oldcfg->cfg_refresh_media;
+
+//Лого оператора...
+  newcfg->cfg_remove_operator_1st_line = oldcfg->cfg_remove_operator_1st_line;
+  newcfg->cfg_remove_operator_2nd_line = oldcfg->cfg_remove_operator_2nd_line;
+  newcfg->cfg_remove_operator_3rd_line = oldcfg->cfg_remove_operator_3rd_line;
+
+//Сеть ...
+  newcfg->cfg_network_rssi_show = oldcfg->cfg_network_rssi_show;
+  newcfg->cfg_network_rssi_dbm_show = oldcfg->cfg_network_rssi_dbm_show;
+  newcfg->cfg_network_rssi_font = oldcfg->cfg_network_rssi_font;
+  newcfg->cfg_network_rssi_color = oldcfg->cfg_network_rssi_color;
+  newcfg->cfg_network_rssi_border = oldcfg->cfg_network_rssi_border;
+  newcfg->cfg_network_rssi_align = oldcfg->cfg_network_rssi_align;
+  newcfg->cfg_network_rssi_x = oldcfg->cfg_network_rssi_x;
+  newcfg->cfg_network_rssi_y = oldcfg->cfg_network_rssi_y;
+
+  newcfg->cfg_network_rssi_percent_show = 0;
+  newcfg->cfg_network_rssi_percent_font = 0;
+  newcfg->cfg_network_rssi_percent_color = 0xFFFFFFFF;
+  newcfg->cfg_network_rssi_percent_border = 0xFF000000;
+  newcfg->cfg_network_rssi_percent_align = 0;
+  newcfg->cfg_network_rssi_percent_x = 0;
+  newcfg->cfg_network_rssi_percent_y = 0;
+
+  newcfg->cfg_network_show = oldcfg->cfg_network_show;
+  newcfg->cfg_network_custom_images = oldcfg->cfg_network_custom_images;
+  newcfg->cfg_network_x = oldcfg->cfg_network_x;
+  newcfg->cfg_network_y = oldcfg->cfg_network_y;
+  str2wstr(newcfg->cfg_net_act_edge_0_file, oldcfg->cfg_net_act_edge_0_file);
+  str2wstr(newcfg->cfg_net_act_edge_1_file, oldcfg->cfg_net_act_edge_1_file);
+  str2wstr(newcfg->cfg_net_act_edge_2_file, oldcfg->cfg_net_act_edge_2_file);
+  str2wstr(newcfg->cfg_net_act_edge_3_file, oldcfg->cfg_net_act_edge_3_file);
+  str2wstr(newcfg->cfg_net_act_edge_4_file, oldcfg->cfg_net_act_edge_4_file);
+  str2wstr(newcfg->cfg_net_act_edge_5_file, oldcfg->cfg_net_act_edge_5_file);
+  str2wstr(newcfg->cfg_net_edge_0_file, oldcfg->cfg_net_edge_0_file);
+  str2wstr(newcfg->cfg_net_edge_1_file, oldcfg->cfg_net_edge_1_file);
+  str2wstr(newcfg->cfg_net_edge_2_file, oldcfg->cfg_net_edge_2_file);
+  str2wstr(newcfg->cfg_net_edge_3_file, oldcfg->cfg_net_edge_3_file);
+  str2wstr(newcfg->cfg_net_edge_4_file, oldcfg->cfg_net_edge_4_file);
+  str2wstr(newcfg->cfg_net_edge_5_file, oldcfg->cfg_net_edge_5_file);
+  str2wstr(newcfg->cfg_net_act_gprs_0_file, oldcfg->cfg_net_act_gprs_0_file);
+  str2wstr(newcfg->cfg_net_act_gprs_1_file, oldcfg->cfg_net_act_gprs_1_file);
+  str2wstr(newcfg->cfg_net_act_gprs_2_file, oldcfg->cfg_net_act_gprs_2_file);
+  str2wstr(newcfg->cfg_net_act_gprs_3_file, oldcfg->cfg_net_act_gprs_3_file);
+  str2wstr(newcfg->cfg_net_act_gprs_4_file, oldcfg->cfg_net_act_gprs_4_file);
+  str2wstr(newcfg->cfg_net_act_gprs_5_file, oldcfg->cfg_net_act_gprs_5_file);
+  str2wstr(newcfg->cfg_net_gprs_0_file, oldcfg->cfg_net_gprs_0_file);
+  str2wstr(newcfg->cfg_net_gprs_1_file, oldcfg->cfg_net_gprs_1_file);
+  str2wstr(newcfg->cfg_net_gprs_2_file, oldcfg->cfg_net_gprs_2_file);
+  str2wstr(newcfg->cfg_net_gprs_3_file, oldcfg->cfg_net_gprs_3_file);
+  str2wstr(newcfg->cfg_net_gprs_4_file, oldcfg->cfg_net_gprs_4_file);
+  str2wstr(newcfg->cfg_net_gprs_5_file, oldcfg->cfg_net_gprs_5_file);
+  str2wstr(newcfg->cfg_net_none_0_file, oldcfg->cfg_net_none_0_file);
+  str2wstr(newcfg->cfg_net_none_1_file, oldcfg->cfg_net_none_1_file);
+  str2wstr(newcfg->cfg_net_none_2_file, oldcfg->cfg_net_none_2_file);
+  str2wstr(newcfg->cfg_net_none_3_file, oldcfg->cfg_net_none_3_file);
+  str2wstr(newcfg->cfg_net_none_4_file, oldcfg->cfg_net_none_4_file);
+  str2wstr(newcfg->cfg_net_none_5_file, oldcfg->cfg_net_none_5_file);
+  str2wstr(newcfg->cfg_net_flight_file, oldcfg->cfg_net_flight_file);
+  newcfg->cfg_refresh_network = oldcfg->cfg_refresh_network;
+
+//Приложения...
+  newcfg->cfg_app_show = oldcfg->cfg_app_show;
+  newcfg->cfg_app_row_max = oldcfg->cfg_app_row_max;
+  newcfg->cfg_app_column_max = oldcfg->cfg_app_column_max;
+  newcfg->cfg_app_fill_by_row = oldcfg->cfg_app_fill_by_row;
+  newcfg->cfg_app_x = oldcfg->cfg_app_x;
+  newcfg->cfg_app_y = oldcfg->cfg_app_y;
+
+  newcfg->cfg_app_book_show = 0;
+  wstrcpy(newcfg->cfg_app_book_msg,L"Book: ");
+  newcfg->cfg_app_book_font = 0;
+  newcfg->cfg_app_book_color = 0xFFFFFFFF;
+  newcfg->cfg_app_book_border = 0xFF000000;
+  newcfg->cfg_app_book_align = 0;
+  newcfg->cfg_app_book_x = 0;
+  newcfg->cfg_app_book_y = 0;
+
+  newcfg->cfg_app_elf_show = 0;
+  wstrcpy(newcfg->cfg_app_elf_msg,L"Elf: ");
+  newcfg->cfg_app_elf_font = 0;
+  newcfg->cfg_app_elf_color = 0xFFFFFFFF;
+  newcfg->cfg_app_elf_border = 0xFF000000;
+  newcfg->cfg_app_elf_align = 0;
+  newcfg->cfg_app_elf_x = 0;
+  newcfg->cfg_app_elf_y = 0;
+
+  newcfg->cfg_app_java_show = 0;
+  wstrcpy(newcfg->cfg_app_java_msg,L"Java: ");
+  newcfg->cfg_app_java_font = 0;
+  newcfg->cfg_app_java_color = 0xFFFFFFFF;
+  newcfg->cfg_app_java_border = 0xFF000000;
+  newcfg->cfg_app_java_align = 0;
+  newcfg->cfg_app_java_x = 0;
+  newcfg->cfg_app_java_y = 0;
+
+//Свои сообщения...
+//Сообщение 1
+  wstrcpy(newcfg->cfg_msg1, oldcfg->cfg_msg1);
+  newcfg->cfg_msg1_show = oldcfg->cfg_msg1_show;
+  newcfg->cfg_msg1_font = oldcfg->cfg_msg1_font;
+  newcfg->cfg_msg1_color = oldcfg->cfg_msg1_color;
+  newcfg->cfg_msg1_border = oldcfg->cfg_msg1_border;
+  newcfg->cfg_msg1_align = oldcfg->cfg_msg1_align;
+  newcfg->cfg_msg1_x = oldcfg->cfg_msg1_x;
+  newcfg->cfg_msg1_y = oldcfg->cfg_msg1_y;
+//Сообщение 2
+  wstrcpy(newcfg->cfg_msg2, oldcfg->cfg_msg2);
+  newcfg->cfg_msg2_show = oldcfg->cfg_msg2_show;
+  newcfg->cfg_msg2_font = oldcfg->cfg_msg2_font;
+  newcfg->cfg_msg2_color = oldcfg->cfg_msg2_color;
+  newcfg->cfg_msg2_border = oldcfg->cfg_msg2_border;
+  newcfg->cfg_msg2_align = oldcfg->cfg_msg2_align;
+  newcfg->cfg_msg2_x = oldcfg->cfg_msg2_x;
+  newcfg->cfg_msg2_y = oldcfg->cfg_msg2_y;
+//Сообщение 3
+  wstrcpy(newcfg->cfg_msg3, oldcfg->cfg_msg3);
+  newcfg->cfg_msg3_show = oldcfg->cfg_msg3_show;
+  newcfg->cfg_msg3_font = oldcfg->cfg_msg3_font;
+  newcfg->cfg_msg3_color = oldcfg->cfg_msg3_color;
+  newcfg->cfg_msg3_border = oldcfg->cfg_msg3_border;
+  newcfg->cfg_msg3_align = oldcfg->cfg_msg3_align;
+  newcfg->cfg_msg3_x = oldcfg->cfg_msg3_x;
+  newcfg->cfg_msg3_y = oldcfg->cfg_msg3_y;
+//Сообщение 4
+  wstrcpy(newcfg->cfg_msg4, oldcfg->cfg_msg4);
+  newcfg->cfg_msg4_show = oldcfg->cfg_msg4_show;
+  newcfg->cfg_msg4_font = oldcfg->cfg_msg4_font;
+  newcfg->cfg_msg4_color = oldcfg->cfg_msg4_color;
+  newcfg->cfg_msg4_border = oldcfg->cfg_msg4_border;
+  newcfg->cfg_msg4_align = oldcfg->cfg_msg4_align;
+  newcfg->cfg_msg4_x = oldcfg->cfg_msg4_x;
+  newcfg->cfg_msg4_y = oldcfg->cfg_msg4_y;
+//Сообщение 5
+  wstrcpy(newcfg->cfg_msg5, oldcfg->cfg_msg5);
+  newcfg->cfg_msg5_show = oldcfg->cfg_msg5_show;
+  newcfg->cfg_msg5_font = oldcfg->cfg_msg5_font;
+  newcfg->cfg_msg5_color = oldcfg->cfg_msg5_color;
+  newcfg->cfg_msg5_border = oldcfg->cfg_msg5_border;
+  newcfg->cfg_msg5_align = oldcfg->cfg_msg5_align;
+  newcfg->cfg_msg5_x = oldcfg->cfg_msg5_x;
+  newcfg->cfg_msg5_y = oldcfg->cfg_msg5_y;
+//Сообщение 6
+  wstrcpy(newcfg->cfg_msg6, oldcfg->cfg_msg6);
+  newcfg->cfg_msg6_show = oldcfg->cfg_msg6_show;
+  newcfg->cfg_msg6_font = oldcfg->cfg_msg6_font;
+  newcfg->cfg_msg6_color = oldcfg->cfg_msg6_color;
+  newcfg->cfg_msg6_border = oldcfg->cfg_msg6_border;
+  newcfg->cfg_msg6_align = oldcfg->cfg_msg6_align;
+  newcfg->cfg_msg6_x = oldcfg->cfg_msg6_x;
+  newcfg->cfg_msg6_y = oldcfg->cfg_msg6_y;
+
+//Дополнительно...
+  newcfg->cfg_soft_key_show = oldcfg->cfg_soft_key_show;
+  newcfg->cfg_highlight = oldcfg->cfg_highlight;
+  newcfg->cfg_refresh_time = oldcfg->cfg_refresh_time;
+  newcfg->cfg_standby_only = oldcfg->cfg_standby_only;
+}
+
+int merge_from_v2_9(v2_10_config_t *newcfg, void *oldcfg, int oldcfgsize)
+{
+  int result = -1;
+  if(oldcfgsize == sizeof(v2_9_config_t))
+  {
+    _merge_from_v2_9(newcfg, (v2_9_config_t *)oldcfg);
+    result = 0;
+  }
+  else
+  {
+    char *buf;
+    if ((buf=new char[sizeof(v2_9_config_t)]))
+    {
+      if(merge_from_v2_8((v2_9_config_t *)buf, oldcfg, oldcfgsize) == 0)
+      {
+        _merge_from_v2_9(newcfg, (v2_9_config_t *)buf);
+        result = 0;
+      }
+    }
+    delete buf;
+  }
+  return(result);
+}
+

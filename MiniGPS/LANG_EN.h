@@ -8,7 +8,7 @@
 *
 * Then give it to us somehow, so that we can make the version with your
 * language, post at the topics where we posted the elf
-* (https://mobilefree.justdanpo.ru/newbb_plus/viewtopic.php?topic_id= )
+* (http://mobilefree.ru/newbb_plus/viewtopic.php?topic_id= )
 *
 * Regards,
 *    copini, zoyd, Ploik, mousex, Joker XT, Stonos and BigHercules
@@ -27,6 +27,7 @@
 #define LG_GFGSHOWKEY             "Show Key"
 #define LG_GFGCELLIDNAMEKEY       "CellID/Name Key"
 #define LG_GFGAUTOLOCATIONKEY     "Auto location key"
+#define LG_GFGSETNAMEKEY          "Set location name key"
 #define LG_GFGIGNOREKEYLOCK     "Ignore Keylock"
 
 //Main
@@ -129,6 +130,7 @@
 #define LG_NAME                    L"Show Name"
 #define LG_AUTOLOCATION_ON         L"Turn on autolocation"
 #define LG_AUTOLOCATION_OFF        L"Turn off autolocation"
+#define LG_SETLOCATIONNAME         L"Set location name"
 #define LG_SETTINGS                L"Settings"
 #define LG_ABOUT                   L"About"
 

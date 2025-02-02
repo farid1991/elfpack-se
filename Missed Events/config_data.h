@@ -6,7 +6,9 @@ extern const unsigned int cfg_pretime;
 extern const unsigned int cfg_period;
 extern const int cfg_sound;
 extern const int cfg_silent;
-extern const char cfg_music_file[256];
+extern const wchar_t cfg_music_file[512];
+extern const int cfg_syssnd;
+extern const unsigned int cfg_syssnd_num;
 extern const int cfg_vibra;
 extern const unsigned int cfg_vibra_time;
 extern const int cfg_flash;
@@ -47,5 +49,12 @@ extern const int cfg_time2_leds;
 extern const int cfg_time2_screen;
 extern const int cfg_mode;
 extern const unsigned int cfg_duration;
+extern const int cfg_profile_1;
+extern const int cfg_profile_2;
+extern const int cfg_profile_3;
+extern const int cfg_profile_4;
+extern const int cfg_profile_5;
+extern const int cfg_profile_6;
+extern const int cfg_profile_7;
 
 #endif

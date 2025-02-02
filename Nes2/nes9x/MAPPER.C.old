@@ -1,0 +1,228 @@
+/*
+        Mapper stuff, this is where the wolves cry out, and the little
+        children cry their eyes out in the nights, this is the proud of
+        many emulators and the sorry of some, this is where we gonna work
+        harder, and this is where we hope to be proud of ourselves.
+
+*/
+typedef unsigned char byte;
+typedef unsigned short word;
+#include        "nes9x.h"
+
+#define	DISABLE	0
+#define	ENABLE	1
+#define	LAST_BANK	ROM_size-1
+#define	ROM16_INIT()
+#define	VROM8_INIT()
+#define	VROM_BANK1(A,V)	VPage[(A)>>10]=&VROM[(V)*0x400]-(A)
+#define	VROM_BANK4(A,V)	VPage[(A)>>10]=VPage[((A)>>10)+1]= \
+	VPage[((A)>>10)+2]=VPage[((A)>>10)+3]=&VROM[(V)*0x1000]-(A)
+#define	VROM_BANK8(A,V)	VPage[0]=VPage[1]=VPage[2]=VPage[3]= \
+	VPage[4]=VPage[5]=VPage[6]=VPage[7]=&VROM[(V)*0x2000]
+#define	ROM_BANK8(A,V)	Page[(A)>>13]=&ROM[V*0x2000]-(A)
+#define	ROM_BANK16(A,V)	Page[(A)>>13]=Page[((A)>>13)+1]=&ROM[(V)*0x4000]-(A)
+#define	ROM_BANK32(A,V)	Page[4]=Page[5]=Page[6]=Page[7]=&ROM[(V)*0x8000]-(A)
+#define	MIRROR_SET(V)	Mirrorxor = 0x400<<(Mirroring=(V))
+
+void (*MMC_write)(word A,byte V);
+
+static word IRQ_counter;
+static byte IRQ_flg,IRQ_ratch;
+static int vmask;
+static void NONE_init(void)
+{
+	ROM_BANK16(0x8000,0); /* first 16K */
+	ROM_BANK16(0xC000,LAST_BANK); /* last 16K */
+	VPage[0]=VPage[1]=VPage[2]=VPage[3]=
+	VPage[4]=VPage[5]=VPage[6]=VPage[7]=(VROM_size>0)?VROM:VRAM;
+	vmask = VROM_size-1;
+}
+
+static void NONE_write(word A,byte V)
+{
+	//printf("cannot ROM write at:%04x,%02x\n",A,V);
+}
+
+static void ROM32_init(void)
+{
+	ROM_BANK32(0x8000,0);
+}
+
+/* mapper 1 or nintendo MMC1 */
+static byte MMC1_reg[4],MMC1_sft,MMC1_buf; //MMC1_sft[4],MMC1_buf[4];
+static void MMC1_init(void)
+{
+	int i;
+	for(i=0;i<4;i++) MMC1_reg[i]=0; //MMC1_sft[i]=MMC1_buf[i]=0;
+	MMC1_sft = MMC1_buf = 0;
+	ROM16_INIT();
+}
+#define	MIRROR_H	0
+#define	MIRROR_V	1
+#define	MIRROR_ONE	2
+
+/* not finish yet */
+static void MMC1_write(word A,byte V)
+{
+	int n=(A>>13)-4;
+	if (V&0x80) { MMC1_sft=MMC1_buf=0;MMC1_reg[0]|=0xC; return;}
+	MMC1_buf|=(V&1)<<(MMC1_sft++);
+  if (MMC1_sft==5) {
+	MMC1_reg[n]=V=MMC1_buf;
+	MMC1_sft=MMC1_buf=0;
+	switch(n){
+	case 0:
+	/*	if (!(V&2)) Mirroring = MIRROR_ONE;
+		else*/ MIRROR_SET(V&1);
+	/*	if (!(V&8)) ROM_BANK32(0x8000,MMC1_reg[3]>>1);
+		else if (V&4) {
+			ROM_BANK16(0x8000,MMC1_reg[3]);
+			ROM_BANK16(0xC000,LAST_BANK);
+		} else {
+			ROM_BANK16(0xC000,MMC1_reg[3]);
+			ROM_BANK16(0x8000,0);
+		}*/
+		break;
+	case 1:
+		if (MMC1_reg[0]&0x10) VROM_BANK4(0x0000,V);
+		else VROM_BANK8(0x0000,V>>1);
+		break;
+	case 2:
+		if (MMC1_reg[0]&0x10) VROM_BANK4(0x1000,V);
+		break;
+	case 3:
+		if ((MMC1_reg[0]&8)) {
+			if ((MMC1_reg[0]&4)) ROM_BANK16(0x8000,V);
+			else ROM_BANK16(0xC000,V);
+		} else {
+			ROM_BANK32(0x8000,V>>1);
+		}
+		break;
+	}
+  }
+}
+
+/* mapper 2 or 74HC161/74HC32 */
+static void iNES2_write(word A,byte V)
+{
+	//printf("%04x %02x\n",A,V);
+	ROM_BANK16(0x8000,V);
+}
+
+/* mapper 3 or VROM switch */
+static void VROMsw_write(word A,byte V)
+{
+	VROM_BANK8(0x0000,V&vmask);
+}
+
+static byte MMC3_cmd;
+static int MMC3_IRQ(int scanline)
+{
+	if (IRQ_flg) {
+		if (--IRQ_counter==0) return TRUE;
+	}
+	return FALSE;
+}
+
+static void MMC3_init(void)
+{
+}
+static void MMC3_write(word A,byte V)
+{
+	switch(A){
+	case 0x8000:MMC3_cmd = V;break;
+	case 0x8001:
+		switch(MMC3_cmd&0xC7){
+		case 0:V&=0xFE; VROM_BANK1(0x0000,V);VROM_BANK1(0x0400,V+1); break;
+		case 1:V&=0xFE; VROM_BANK1(0x0800,V);VROM_BANK1(0x0C00,V+1); break;
+		case 2:VROM_BANK1(0x1000,V); break;
+		case 3:VROM_BANK1(0x1400,V); break;
+		case 4:VROM_BANK1(0x1800,V); break;
+		case 5:
+			if (MMC3_cmd&0x40) {
+				ROM_BANK8(0xC000,V);
+				ROM_BANK8(0x8000,(ROM_size-1)*2);
+			} else {
+				ROM_BANK8(0x8000,V);
+				ROM_BANK8(0xC000,(ROM_size-1)*2);
+			}
+			break;
+		case 6:
+			if (MMC3_cmd&0x40) {
+				ROM_BANK8(0xA000,V);
+				ROM_BANK8(0x8000,(ROM_size-1)*2);
+			} else {
+				ROM_BANK8(0xA000,V);
+				ROM_BANK8(0xC000,(ROM_size-1)*2);
+			}
+			break;
+		}
+		break;
+	case 0xA000:MIRROR_SET(V&1); break;
+	case 0xA001:/* ?? */ break;
+	case 0xE000:V=IRQ_ratch;
+	case 0xC000:IRQ_counter=V;if(V==0) IRQ_flg=DISABLE; break;
+	case 0xC001:IRQ_ratch=V;break;
+	case 0xE001:IRQ_flg=ENABLE;break;
+	}
+}
+
+/* mapper 4 or nintendo MMC3 */
+
+/* mapper 5 or nintendo MMC5 */
+
+/* mapper 6 or ????????????? */
+
+/* mapper 7 or ROM switch    */
+static void ROMsw_init(void)
+{
+	ROM32_init();
+}
+static void ROMsw_write(word A,byte V)
+{
+	ROM_BANK32(0x8000,V&0xf);
+//??	if ((V&0x10)==0) nametbl=0x2000; else nametbl=0x2400;
+}
+
+/* mapper 8 or FFE F3xxx */
+
+/* mapper 9 or nintendo MMC2 */
+
+/* mapper 10 or nintendo MMC4 */
+
+/* mapper 11 or Color dreams */
+
+/* mapper 15 or 100 in 1 */
+
+/* mapper 16 or bandai */
+
+/* mapper 17 or FFE F8xxx */
+
+/* mapper 18 or Jaleco */
+
+/* mapper 19 or Namcot 106 */
+
+/* mapper 21 or Konami VRC4 */
+
+/* mapper 22 or Konami VRC2 type A */
+
+/* mapper 23 or Konami VRC2 type B */
+
+/* mapper 32 or Irem */
+
+/* mapper 33 or Taito */
+
+/* mapper 34 or iNES #34 */
+
+/* mapper 69 or sex */
+
+/* mapper 90 or smw */
+
+/* mapper 666 or nsf */
+/*
+        default:
+		printf("Not Support Mapper %d\n",type);
+		return -1;
+	}
+	return 0;
+}*/

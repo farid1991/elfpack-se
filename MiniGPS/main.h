@@ -3,14 +3,13 @@
 
 #define ELFNAME "MiniGPS"
 #define LELFNAME L"MiniGPS"
-#define LELFVERSION L"2.6"
-#define LAUTHORINFO L"© copini\ntweaks by\nzoyd, Ploik, mousex, Joker XT, Stonos, BigHercules"
+#define LELFVERSION L"2.6.1"
+#define LAUTHORINFO L"© copini\ntweaks by\nzoyd, Ploik, mousex, Joker XT, Stonos, BigHercules, Lost"
 #define LTRANSLATED L"Translated by "
 
 #define FREE_GUI(a) if (a) {GUIObject_Destroy(a); a=0;}
 #define COLOR_RGBA(r,g,b,a) (((unsigned int)r<<16)|((unsigned int)g<<8)|((unsigned int)b)|((unsigned int)a<<24))
 
-#define empty 0x6FFFFFFF
 #define MAX_MANUAL_PROFILE_NUM 7
 #define MAX_PLACE_NUM          16
 #define MAX_AUTOLOCATION_LEN   96
@@ -89,11 +88,15 @@ void InvalidateAll();
 int CheckCurrentCell();
 int onBcfgConfig(void* mess, BOOK* bk);
 int ShowAuthorInfo(void *mess ,BOOK* book);
+int AddTo_db(wchar_t *wstr);
+void onTimer(u16 timerID, LPARAM lparam);
 
 extern bool visible;
 extern bool showCellID;
 extern bool AutoLocation;
 extern wchar_t SIwstr[MAX_AUTOLOCATION_LEN];
+extern wchar_t CellName[256];
+extern u16 timer;
 
 #endif //_MAIN_H_
 

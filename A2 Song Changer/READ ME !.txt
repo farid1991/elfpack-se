@@ -1,0 +1,5 @@
+Song Changer for A2
+Tested on SE C901
+(c) mc_kibel 2010
+! To use elf, you need to disable shortcuts, elf differs from DB2020 version. !
+Shortcuts are set in main.c, when music is disabled it will run them.

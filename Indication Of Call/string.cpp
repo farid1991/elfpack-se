@@ -7,7 +7,7 @@ char* strchr(char* str,char c)
 }
 
 /*
-u16* wstrchr(u16* str,u16 c)  
+u16* wstrchr(u16* str,u16 c)
 {
 	for(;*str;str++)if(*str==c)return str;
 	return NULL;
