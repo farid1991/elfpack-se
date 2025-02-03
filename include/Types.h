@@ -1078,6 +1078,9 @@ typedef struct FILESUBROUTINE
 		int (*ON_CHECK)(struct SUB_EXECUTE*, void*);
 		int (*ON_CMD_RUN_CHECK)(struct SUB_EXECUTE*);
 	};
+#ifdef DB3350
+	TEXTID StrID_1;
+#endif
 }FILESUBROUTINE;
 
 typedef struct FILEITEM

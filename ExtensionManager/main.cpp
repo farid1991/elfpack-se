@@ -302,12 +302,14 @@ void CreateFileSubroutine()
   NewFileSub->ON_CMD_RUN = NewFileSub_DB_CMD_RUN;
   NewFileSub->ON_CMD_RUN_CHECK = isOpenElfExist;
   textidname2id(IDN_START,-1,&NewFileSub->StrID);
+  NewFileSub->StrID_1 = NewFileSub->StrID;
 
   NewFileSub++;
   NewFileSub->cmd = DB_CMD_EDIT;
   NewFileSub->ON_CMD_RUN = NewFileSub_DB_CMD_EDIT;
   NewFileSub->ON_CMD_RUN_CHECK = isEditElfExist;
   textidname2id(IDN_EDIT,-1,&NewFileSub->StrID);
+  NewFileSub->StrID_1 = NewFileSub->StrID;
 
   while (NewFileSub->ON_CMD)
   {
