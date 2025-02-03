@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<workspace>
+  <project>
+    <path>$WS_DIR$\Standby Mode.ewp</path>
+  </project>
+  <batchBuild>
+    <batchDefinition>
+      <name>all</name>
+      <member>
+        <project>Standby Mode</project>
+        <configuration>Release_EN</configuration>
+      </member>
+      <member>
+        <project>Standby Mode</project>
+        <configuration>Release_RU</configuration>
+      </member>
+    </batchDefinition>
+  </batchBuild>
+</workspace>
+
+

@@ -84,7 +84,7 @@ void InitConfig(void)
   {
     if(LoadConfigData(GetDir(DIR_ELFS_CONFIG|MEM_EXTERNAL),LCFGFILENAME) < 0)
     {
-      SaveConfigData(GetDir(DIR_ELFS_CONFIG|MEM_INTERNAL),LCFGFILENAME);
+      SaveConfigData(GetDir(DIR_ELFS_CONFIG|MEM_EXTERNAL),LCFGFILENAME);
     }
   }
 }

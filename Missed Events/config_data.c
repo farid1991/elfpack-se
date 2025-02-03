@@ -11,6 +11,8 @@
   #define IS_ENABLED_MSG "Напоминать"
   #define SILENT_MSG "В режиме без звука"
   #define FILE_MSG "Звуковой файл"
+  #define SYSSND_MSG "Системная мелодия"
+  #define SYSSNDNUM_MSG "Номер мелодии"
   #define VIBRA_MSG "Вибрация"
   #define TIME_MSG "Длительность (сек)"
   #define FLASH_MSG "Мигание фонаря"
@@ -45,6 +47,14 @@
   #define REDLED_MSG "Красный светодиод"
   #define ONTIME_MSG "Время во вкл. сост.(мсек)"
   #define OFFTIME_MSG "Время в выкл. сост.(мсек)"
+  #define PROFILES_MSG "Работать в профилях"
+  #define PROFILE1_MSG "Обычный"
+  #define PROFILE2_MSG "Совещание"
+  #define PROFILE3_MSG "В автомобиле"
+  #define PROFILE4_MSG "На улице"
+  #define PROFILE5_MSG "Аудиоустр."
+  #define PROFILE6_MSG "Дома"
+  #define PROFILE7_MSG "На работе"
 #else
   #define CHECK_MSG "Check period (sec)"
   #define PRE_TIME_MSG "Pre Time (sec)"
@@ -53,6 +63,8 @@
   #define IS_ENABLED_MSG "Is enabled"
   #define SILENT_MSG "On silent mode"
   #define FILE_MSG "Notification file"
+  #define SYSSND_MSG "System sound"
+  #define SYSSNDNUM_MSG "Sound number"
   #define VIBRA_MSG "Vibration"
   #define TIME_MSG "Duration time (sec)"
   #define FLASH_MSG "Flash"
@@ -87,17 +99,25 @@
   #define REDLED_MSG "Red LED"
   #define ONTIME_MSG "On time (ms)"
   #define OFFTIME_MSG "Off time (ms)"
+  #define PROFILES_MSG "Work in profiles"
+  #define PROFILE1_MSG "Normal"
+  #define PROFILE2_MSG "Meeting"
+  #define PROFILE3_MSG "In car"
+  #define PROFILE4_MSG "Outdoors"
+  #define PROFILE5_MSG "Handsfree"
+  #define PROFILE6_MSG "Home"
+  #define PROFILE7_MSG "Office"
 #endif
 
 __root const CFG_HDR cfghdr_times_0={CFG_LEVEL,TIMES_MSG,1,0};
   //Время (в сек) между проверками на пропущенные вызовы, SMS, EMAIL, MMS
   __root const CFG_HDR cfghdr_check_period={CFG_UINT,CHECK_MSG,3,1000};
   __root const unsigned int cfg_checkperiod=10;
-  
+
   //Время (в сек) до начала (старта) напоминания после обнаружения пропущенного вызова/сообщения
   __root const CFG_HDR cfghdr_pre_time={CFG_UINT,PRE_TIME_MSG,3,1000};
   __root const unsigned int cfg_pretime=90;
-  
+
   //Время (в сек) между напоминанием
   __root const CFG_HDR cfghdr7={CFG_UINT,PERIOD_MSG,30,1000};
   __root const unsigned int cfg_period=60;
@@ -111,9 +131,18 @@ __root const CFG_HDR cfghdr_music_0={CFG_LEVEL,SOUND_MSG "...",1,0};
   __root const CFG_HDR cfghdr_music_2={CFG_CHECKBOX,SILENT_MSG,0,2};
   __root const int cfg_silent=0;
   //Файл мелодии
-  __root const CFG_HDR cfghdr_music_file={CFG_STR_WIN1251,FILE_MSG,0,255};
-  __root const char cfg_music_file[256]="%INI_INT%/notific.mp3";
+  __root const CFG_HDR cfghdr_music_file={CFG_UTF16_STRING,FILE_MSG,0,511};
+  __root const wchar_t cfg_music_file[512]=L"%INI_INT%/notific.mp3";
 __root const CFG_HDR cfghdr_music_x={CFG_LEVEL,"",0,0};
+
+__root const CFG_HDR cfghdr_syssnd_0={CFG_LEVEL,SYSSND_MSG "...",1,0};
+  //Напоминать системной мелодией (1 - вкл, 0 - выкл)
+  __root const CFG_HDR cfghdr_syssnd_1={CFG_CHECKBOX,IS_ENABLED_MSG,0,0};
+  __root const int cfg_syssnd=0;
+  //Номер системной мелодии
+  __root const CFG_HDR cfghdr_syssnd_2={CFG_UINT,SYSSNDNUM_MSG,1,1000};
+  __root const unsigned int cfg_syssnd_num=8;
+__root const CFG_HDR cfghdr_syssnd_x={CFG_LEVEL,"",0,0};
 
 __root const CFG_HDR cfghdr_vibra_0={CFG_LEVEL,VIBRA_MSG "...",1,0};
   //Напоминать вибрацией (1 - вкл, 0 - выкл)
@@ -128,7 +157,7 @@ __root const CFG_HDR cfghdr_flash_0={CFG_LEVEL,FLASH_MSG "...",1,0};
   //Напоминать миганием фонарика (1 - вкл, 0 - выкл)
   __root const CFG_HDR cfghdr_flash_1={CFG_CHECKBOX,IS_ENABLED_MSG,0,0};
   __root const int cfg_flash=0;
-  //;Длительность мигания в сек 
+  //;Длительность мигания в сек
   __root const CFG_HDR cfghdr_flash_2={CFG_UINT,TIME_MSG,1,1000};
   __root const unsigned int cfg_flash_time=3;
   //Скорость мигания
@@ -140,7 +169,7 @@ __root const CFG_HDR cfghdr_redled_0={CFG_LEVEL,REDLED_MSG "...",1,0};
   //Напоминать миганием светодиода (1 - вкл, 0 - выкл)
   __root const CFG_HDR cfghdr_redled_1={CFG_CHECKBOX,IS_ENABLED_MSG,0,0};
   __root const int cfg_redled=0;
-  //Длительность мигания в сек 
+  //Длительность мигания в сек
   __root const CFG_HDR cfghdr_redled_2={CFG_UINT,TIME_MSG,1,1000};
   __root const unsigned int cfg_redled_time=3;
   //Время во вкл. сост.(мсек)
@@ -155,7 +184,7 @@ __root const CFG_HDR cfghdr_led_0={CFG_LEVEL,LED_MSG "...",1,0};
   //Напоминать миганием светодиода (1 - вкл, 0 - выкл)
   __root const CFG_HDR cfghdr_led_1={CFG_CHECKBOX,IS_ENABLED_MSG,0,0};
   __root const int cfg_led=0;
-  //;Длительность мигания в сек 
+  //;Длительность мигания в сек
   __root const CFG_HDR cfghdr_led_2={CFG_UINT,TIME_MSG,1,1000};
   __root const unsigned int cfg_led_time=3;
   //Скорость мигания
@@ -255,4 +284,21 @@ __root const CFG_HDR cfghdr_mode_0={CFG_LEVEL,MODE_MSG,1,0};
   //Течении какого времени (в мин) или сколько раз напоминать (в зависимости от mode)
   __root const CFG_HDR cfghdr_mode_3={CFG_UINT,DURATION_MSG,1,100000};
   __root const unsigned int cfg_duration=60;
+  //Работать в профилях
+  __root const CFG_HDR cfghdr_profiles_0={CFG_LEVEL,PROFILES_MSG,1,0};
+    __root const CFG_HDR cfghdr_profile_1={CFG_CHECKBOX,PROFILE1_MSG,0,0};
+    __root const int cfg_profile_1=1;
+    __root const CFG_HDR cfghdr_profile_2={CFG_CHECKBOX,PROFILE2_MSG,0,0};
+    __root const int cfg_profile_2=1;
+    __root const CFG_HDR cfghdr_profile_3={CFG_CHECKBOX,PROFILE3_MSG,0,0};
+    __root const int cfg_profile_3=1;
+    __root const CFG_HDR cfghdr_profile_4={CFG_CHECKBOX,PROFILE4_MSG,0,0};
+    __root const int cfg_profile_4=1;
+    __root const CFG_HDR cfghdr_profile_5={CFG_CHECKBOX,PROFILE5_MSG,0,0};
+    __root const int cfg_profile_5=1;
+    __root const CFG_HDR cfghdr_profile_6={CFG_CHECKBOX,PROFILE6_MSG,0,0};
+    __root const int cfg_profile_6=1;
+    __root const CFG_HDR cfghdr_profile_7={CFG_CHECKBOX,PROFILE7_MSG,0,0};
+    __root const int cfg_profile_7=1;
+  __root const CFG_HDR cfghdr_profiles_1={CFG_LEVEL,"",0,0};
 __root const CFG_HDR cfghdr_mode_x={CFG_LEVEL,"",0,0};

@@ -8,9 +8,10 @@
 #define LG_GFGSETBUTTONSONLY      "Только кнопки"
 #define LG_GFGMENUKEY           "Кнопка меню"
 #define LG_GFGSETBUTTONS        "Кнопки"
-#define LG_GFGSHOWKEY             "Кнопка паказать/спрятать"
+#define LG_GFGSHOWKEY             "Кнопка показать/спрятать"
 #define LG_GFGCELLIDNAMEKEY       "Кнопка CellID/Имя"
 #define LG_GFGAUTOLOCATIONKEY     "Кнопка автодобавления места"
+#define LG_GFGSETNAMEKEY          "Кнопка наименования тек. места"
 #define LG_GFGIGNOREKEYLOCK     "Игнорировать блок. клавиш"
 
 //Основное
@@ -113,6 +114,7 @@
 #define LG_NAME                    L"Показать Имя"
 #define LG_AUTOLOCATION_ON         L"Вкл. автодобавление места"
 #define LG_AUTOLOCATION_OFF        L"Выкл. автодобавление места"
+#define LG_SETLOCATIONNAME         L"Установить название места"
 #define LG_SETTINGS                L"Настройки"
 #define LG_ABOUT                   L"Oб эльфе"
 

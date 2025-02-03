@@ -5,9 +5,9 @@
 #include "config_data.h"
 #include "util.h"
 
-#define ELFNAME "MissedEvents v.2.3"
+#define ELFNAME "MissedEvents"
 #define LELFNAME L"Missed Events"
-#define LELFVERSION L"\nv2.3\nby den_po\n\nMods: Ploik & BigHercules"
+#define LELFVERSION L"\nv2.4\nby den_po\n\nMods: Ploik & BigHercules"
 
 void (*LEDControl_W580)(int,int id,int RED,int GREEN,int BLUE, int br, int delay)=(void (*)(int,int id,int RED,int GREEN,int BLUE,int br,int delay))(0x4529BFA9);
 
@@ -36,8 +36,8 @@ int LED=0;
 int LED580=1;
 int LEDnum=2;
 
-wchar_t cfg_filepath[256];
-wchar_t cfg_filename[256];
+wchar_t cfg_filepath[512];
+wchar_t cfg_filename[512];
 
 u16 timerFlash = 0;
 u16 timerScreen = 0;
@@ -57,6 +57,11 @@ TIME cfg_time1_off  = {23,0,0,0};
 int cfg_time2_flag = 1;
 TIME cfg_time2_on   = {6,30,0,0};
 TIME cfg_time2_off  = {23,0,0,0};
+
+const int *cfg_profile[7] = {
+  &cfg_profile_1, &cfg_profile_2, &cfg_profile_3, &cfg_profile_4,
+  &cfg_profile_5, &cfg_profile_6, &cfg_profile_7
+};
 
 int number = 0x7ffffff;
 
@@ -132,15 +137,15 @@ void onTimerFlash(u16 timerID, LPARAM lparam)
   {
    case CHIPID_DB2000:
    case CHIPID_DB2010:
-   {
-    SetLampLevel(lamp^=0x50);
-   }
-   break;
+     SetLampLevel(lamp^=0x50);
+     break;
    case CHIPID_DB2020:
-   {
-    SetLampLevel(lamp^=1);
-   }
-   break;
+   case CHIPID_DB3150:
+   case CHIPID_DB3200:
+   case CHIPID_DB3210:
+   case CHIPID_DB3350:
+      SetLampLevel(lamp^=0x1);
+      break;
   }
   Timer_ReSet(&timerFlash,cfg_flash_blink_speed,onTimerFlash,0);
 }
@@ -281,7 +286,11 @@ void onTimer(u16 timerID, LPARAM lparam)
       }
     }
 
-    if(cfg_mode)
+    int cur_profile;
+    REQUEST_PROFILE_GETACTIVEPROFILE(SYNC , &cur_profile);
+    if (*cfg_profile[cur_profile] == 0)
+      disabled_by_mode = true;
+    else if(cfg_mode)
     {
         char* me=MissedEvents();
         char mestatus=*me;
@@ -320,6 +329,10 @@ void onTimer(u16 timerID, LPARAM lparam)
                 char vol;
                 GetAudioSettings(2,&vol);
                 PlayFileV(cfg_filepath,cfg_filename,vol);
+            }
+            if (cfg_syssnd==1 && !sound_disabled_by_time)
+            {
+              PlaySystemSound(cfg_syssnd_num);
             }
             if(GetVibrator(0,0) && (cfg_vibra==1) && (!vibra_disabled_by_time))
             {
@@ -466,15 +479,28 @@ enum
 
 int OnCallManagerEvent(void* r0,BOOK* b)
 {
-        switch(((CALLMANAGER_EVENT_DATA*)r0)->CallState)
+  int eventdata;
+        switch (GetChipID()&CHIPID_MASK)
+        {
+        case CHIPID_DB2000:
+        case CHIPID_DB2010:
+        case CHIPID_DB2020:
+                 eventdata= (((CALLMANAGER_EVENT_DATA*)r0)->CallState);
+                 break;
+        case CHIPID_DB3150:
+        case CHIPID_DB3200:
+        case CHIPID_DB3210:
+        case CHIPID_DB3350:
+                 eventdata=(((CALLMANAGER_EVENT_DATA_A2*)r0)->CallState);
+        }
+        switch (eventdata)
         {
         case CALLMANAGER_CALL_SETUP:
         case CALLMANAGER_CALL_ALERT:
-                disabled=true;
-                break;
+                 disabled=true;
+                 break;
         case CALLMANAGER_CALL_TERMINATED:
-                disabled=false;
-                break;
+                 disabled=false;
         }
         return 1;
 }
@@ -538,12 +564,15 @@ int main(wchar_t* filename)
                         checkevents=1|2|4|8;//MISSED_CALL|MISSED_SMS|MISSED_EMAIL|MISSED_MMS
                         break;
                 case CHIPID_DB2020:
+                        skipevents=1|2;//KEYLOCKED|NOSOUND
+                        checkevents=4|8|0x10|0x20;//MISSED_CALL|MISSED_SMS|MISSED_EMAIL|MISSED_MMS
+                        break;
                 case CHIPID_DB3150:
                 case CHIPID_DB3200:
                 case CHIPID_DB3210:
                 case CHIPID_DB3350:
                         skipevents=1|2;//KEYLOCKED|NOSOUND
-                        checkevents=4|8|0x10|0x20;//MISSED_CALL|MISSED_SMS|MISSED_EMAIL|MISSED_MMS
+                        checkevents=4|8|0x10|0x20|0x40|0x80;//MISSED_CALL|MISSED_SMS|MISSED_EMAIL|MISSED_MMS|MISSED_CALENDAR|MISSED_TASKS
                 }
 
                 BOOK *myBook=(BOOK*)malloc(sizeof(BOOK));
@@ -565,6 +594,8 @@ int main(wchar_t* filename)
 
 /*
   Revision history
+  2.4
+     + Настройка работы в профилях
   2.3
      + Добавлено мигание красным светодиодом
   2.2

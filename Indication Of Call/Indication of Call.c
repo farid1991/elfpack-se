@@ -4,9 +4,11 @@
 #include "config_data.h"
 #include "conf_loader.h"
 
-#define ELFNAME "Indication of Call v.2.3"
-#define LELFNAME L"Indication of Call"
-#define LELFVERSION L"\nv2.3\n\n(c)Ploik & BigHercules\n\nRespect: Slawwan"
+#define ELF_BCFG_CONFIG_EVENT 994
+
+#define ELFNAME "Indication v.3"
+#define LELFNAME L"Indication"
+#define LELFVERSION L"\nv3\n\n(c)Ploik & BigHercules\n\nRespect: Slawwan"
 
 void (*LEDControl_W580)(int,int id,int RED,int GREEN,int BLUE, int br, int delay)=(void (*)(int,int id,int RED,int GREEN,int BLUE,int br,int delay))(0x4529BFA9);
 
@@ -71,7 +73,7 @@ void onMuteTimer(u16 timerID, LPARAM lparam)
   }
 }
 
-int DisableUP(void *msg, BOOK * book, PAGE_DESC * page_desc, LPARAM ClientData, u16 event)
+int DisableUP(void *msg, BOOK * book, PAGE_DESC * page_desc, LPARAM, u16)
 {
   if((incom==1) && (cfg_flash_silent==0))
   {
@@ -92,7 +94,7 @@ int DisableUP(void *msg, BOOK * book, PAGE_DESC * page_desc, LPARAM ClientData, 
   return(0);
 }
 
-int DisableDOWN(void *msg, BOOK * book, PAGE_DESC * page_desc, LPARAM ClientData, u16 event)
+int DisableDOWN(void *msg, BOOK * book, PAGE_DESC * page_desc, LPARAM, u16)
 {
   if((incom==1) && (cfg_flash_silent==0))
   {
@@ -192,6 +194,10 @@ void onTimerFlash(u16 timerID, LPARAM lparam)
         }
         break;
         case CHIPID_DB2020:
+        case CHIPID_DB3150:
+        case CHIPID_DB3200:
+        case CHIPID_DB3210:
+        case CHIPID_DB3350:
         {
             SetLampLevel(lamp^=1);
         }
@@ -316,7 +322,40 @@ enum
     CALLMANAGER_CALL_WAITING    =5,
     CALLMANAGER_CALL_TERMINATED =6  /*Завершение соединения*/
 };
-     /*Начало гудков*/
+
+/*Входящее сообщение*/
+int incomingSms(void* r0,BOOK* b)
+{
+    if(cfg_vibraSms==1)
+    {
+        PAudioControl pAC = AudioControl_Init();
+        if( !pAC ) pAC = *GetAudioControlPtr();
+        AudioControl_Vibrate(pAC, 400, 50, cfg_vibraSms_time);
+    }
+    if(cfg_flashSms==1)
+    {
+        timerFlash=Timer_Set(70,onTimerFlash,0);
+        offtimer=Timer_Set(cfg_flashSms_time*1000,offTimerFlash,0);
+    }
+    if(cfg_redledSms==1)
+    {
+        timerREDLED=Timer_Set(cfg_redled_ontime,onTimerREDLED,0);
+        offtimerREDLED=Timer_Set(cfg_redledSms_time*1000,offTimerREDLED,0);
+    }
+    if(cfg_ledSms==1)
+    {
+        timerLED=Timer_Set(cfg_led_blink_speed,onTimerLED,0);
+        offtimerLED=Timer_Set(cfg_ledSms_time*1000,offTimerLED,0);
+    }
+    if(cfg_screenSms==1)
+    {
+        timerScreen=Timer_Set(cfg_screen_blink_speed,onTimerScreen,0);
+        offtimerScreen=Timer_Set(cfg_screenSms_time*1000,offTimerScreen,0);
+    }
+    return(0);
+}
+
+/*Начало гудков*/
 int Connect(void* r0,BOOK* b)
 {
     if(cfg_vibraring==1)
@@ -350,8 +389,23 @@ int Connect(void* r0,BOOK* b)
 
 int OnCallManagerEvent(void* r0,BOOK* b)
 {
-    switch(((CALLMANAGER_EVENT_DATA*)r0)->CallState)
+    int eventdata;
+
+    switch (GetChipID()&CHIPID_MASK)
     {
+      case CHIPID_DB2000:
+      case CHIPID_DB2010:
+      case CHIPID_DB2020:
+                 eventdata= (((CALLMANAGER_EVENT_DATA*)r0)->CallState);
+                 break;
+      case CHIPID_DB3150:
+      case CHIPID_DB3200:
+      case CHIPID_DB3210:
+      case CHIPID_DB3350:
+                 eventdata=(((CALLMANAGER_EVENT_DATA_A2*)r0)->CallState);
+        }
+        switch (eventdata)
+        {
       /*Входящий вызов*/
         case CALLMANAGER_CALL_ALERT:
         {
@@ -397,6 +451,7 @@ int OnCallManagerEvent(void* r0,BOOK* b)
         {
             if(timerFlash) offTimerFlash(0,0);
             if(timerLED) offTimerLED(0,0);
+            if(timerREDLED) offTimerREDLED(0,0);
             if(timerScreen) offTimerScreen(0,0);
 
             if((cfg_vibracon==1) && (incom==0))
@@ -542,14 +597,43 @@ static int onReconfigElf(void *mess ,BOOK *book)
   return(result);
 }
 
+int onBcfgConfig(void* mess,BOOK* b)
+{
+  FSTAT _fstat;
+  wchar_t path[256];
+
+  if(fstat(GetDir(DIR_ELFS|MEM_INTERNAL),L"BcfgEdit.elf",&_fstat)==0)
+  {
+    wstrcpy(path,GetDir(DIR_ELFS|MEM_INTERNAL));
+  }
+  else if(fstat(GetDir(DIR_ELFS|MEM_EXTERNAL),L"BcfgEdit.elf",&_fstat)==0)
+  {
+    wstrcpy(path,GetDir(DIR_ELFS|MEM_EXTERNAL));
+  }
+  else
+  {
+    #ifndef ENG
+      MessageBox(EMPTY_TEXTID, STR("BcfgEdit.elf не найден!"), NOIMAGE, 1 ,5000, 0);
+    #else
+      MessageBox(EMPTY_TEXTID, STR("BcfgEdit.elf not found!"), NOIMAGE, 1 ,5000, 0);
+    #endif
+    return (1);
+  }
+  wstrcat(path,L"/BcfgEdit.elf");
+  elfload(path,(void*)successed_config_path,(void*)successed_config_name,0);
+  return (1);
+}
+
 const PAGE_MSG evtlist[] @ "DYN_PAGE"=
 {
-  ELF_TERMINATE_EVENT,      onExit,
-  ELF_SHOW_INFO_EVENT,      onAbout,
-  ELF_RECONFIG_EVENT,       onReconfigElf,
-  ON_CALLMANAGER_EVENT_TAG, OnCallManagerEvent,
-  ONGOINGCALL_CALL_CONNECTED_EVENT_TAG  ,Connect,
-  NIL_EVENT_TAG,            NULL
+  ELF_TERMINATE_EVENT,                   onExit,
+  ELF_SHOW_INFO_EVENT,                   onAbout,
+  ELF_RECONFIG_EVENT,                    onReconfigElf,
+  UI_MESSAGING_SMS_RECEIVED_EVENT_TAG,   incomingSms,
+  ON_CALLMANAGER_EVENT_TAG,              OnCallManagerEvent,
+  ONGOINGCALL_CALL_CONNECTED_EVENT_TAG , Connect,
+  ELF_BCFG_CONFIG_EVENT,                 onBcfgConfig,
+  NIL_EVENT_TAG,                         NULL
 };
 
 const PAGE_DESC defaultpage = {"Indication_Base_page",0,evtlist};
@@ -576,7 +660,7 @@ int main(wchar_t* filename)
             InitConfig();
 
             ModifyUIPageHook(VOLUMEUPKEY_SHORT_PRESS_EVENT,DisableUP,0,PAGE_HOOK_ADD_BEFORE);
-            ModifyUIPageHook(VOLUMEDOWNKEY_SHORT_PRESS_EVENT,DisableDOWN,0,PAGE_HOOK_ADD_BEFORE);		
+            ModifyUIPageHook(VOLUMEDOWNKEY_SHORT_PRESS_EVENT,DisableDOWN,0,PAGE_HOOK_ADD_BEFORE);
             BOOK *myBook = (BOOK*)malloc(sizeof(BOOK));
             memset(myBook,0,sizeof(BOOK));
             if(!CreateBook(myBook,bookOnDestroy,&defaultpage,myappname,-1,0))
@@ -591,45 +675,3 @@ int main(wchar_t* filename)
         }
         return 0;
 }
-
-/*
-  Revision history.
-    2.3
-      + Добавлены таймеры для сброса и/или отключения звука входящего вызова. 
-        При значении 0 - выключение таймера.
-    2.2
-      + Добавлено мигание красным светодиодом
-    2.1
-      + Использование функции AudioControl_Init
-      + Устранена утечка памяти.
-    2.0.8
-      + Устранена утечка памяти.
-    2.0.7
-      + Использование функции AudioControl_Vibrate вместо Vibra
-    2.0.5
-      + мелкие улучшения/исправления/оптимизация
-    2.0.4
-      + Изменения в структуре конфигурационного файла.
-      + исправлен баг в алгоритме индикации.
-      + алгоритм индикации светодиодами аналогичен алгоритму индикации фонарем
-      + алгоритм индикации экраном аналогичен алгоритму индикации фонарем
-    2.0.3
-      + Изменения в структуре конфигурационного файла.
-      + исправлен баг в алгоритме мигания светодиодами на W580
-    2.0.2
-      + Изменения в структуре конфигурационного файла.
-      + мигание светодиодами на W580
-    2.0.1
-      + Изменения в структуре конфигурационного файла.
-      + мигание дисплея
-      + мигание светодиодами
-      + длителность вибры задается в мсек
-    2.0 beta 3
-      + Поправлен параметр выбора в конце какой минуту вибрить
-    2.0 beta2
-      + английская версия конфигурационного файла. (Вибирается конфигурацией проекта Release_en)
-        Важно! Нужно удалиь старый конфигурационный файл.
-      + исправлены ошибка, при переходе на bcgf (DisableUP и DisableDOWN)
-    2.0 beta
-      + новая версия конфигурационного файла (bcfg)
-*/

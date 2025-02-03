@@ -6,11 +6,11 @@
 
 #ifndef ENG
   #define BLINK_SPEED_MSG "Скорость миг."
-  #define PRESS_CALL_MSG "При нажатии 'вызвать'"
-  #define INCOMING_CALL_MSG "При входящем вызове"
-  #define CONNECT_MSG "При соединении"
-  #define TAKE_A_CALL_MSG "При поднятии трубки"
-  #define END_CONVERSATION_MSG "При окончании разг."
+  #define PRESS_CALL_MSG "Нажатие 'вызвать'"
+  #define INCOMING_CALL_MSG "Входящий вызов"
+  #define CONNECT_MSG "Соединение"
+  #define TAKE_A_CALL_MSG "Поднятие трубки"
+  #define END_CONVERSATION_MSG "Окончание разговора"
   #define AT_MINUTE_END_MSG "В конце минуты"
   #define AT_N_MINUTE_END_MSG "В конце N-ой минуты"
   #define LAMP_ON_MUTE_MSG "Фонарик при выкл. зв."
@@ -49,6 +49,8 @@
   #define TIMERS_MSG "Таймеры"
   #define AUTO_REJECT_MSG "Aвтосброс (сек)"
   #define AUTO_MUTE_MSG "Aвтоотключение звука (сек)"
+  #define SMS_MSG "Входящее SMS"
+
 #else // ENG
   #define BLINK_SPEED_MSG "Blink speed"
   #define PRESS_CALL_MSG "On press 'CALL'"
@@ -94,7 +96,41 @@
   #define TIMERS_MSG "Timers"
   #define AUTO_REJECT_MSG "Auto-reject (sec)"
   #define AUTO_MUTE_MSG "Auto-mute (sec)"
+  #define SMS_MSG "Incoming SMS"
 #endif //ENG
+
+__root const CFG_HDR cfghdr_sms={CFG_LEVEL,SMS_MSG,1,0};
+    __root const CFG_HDR cfghdr_lamp_sms_0={CFG_LEVEL,LAMP_MSG,1,0};
+	__root const CFG_HDR cfghdr_blink_lamp_sms_0={CFG_CHECKBOX,BLINK_MSG,0,0};
+	__root const int cfg_flashSms = 0;
+	__root const CFG_HDR cfghdr_blink_time_sms_0={CFG_UINT,BLINK_TIME_MSG,1,10000};
+	__root const int cfg_flashSms_time = 1;
+    __root const CFG_HDR cfghdr_lamp_sms_0x={CFG_LEVEL,"",0,0};
+    __root const CFG_HDR cfghdr_vibra_sms_0={CFG_LEVEL,VIBRA_MSG,1,0};
+	__root const CFG_HDR cfghdr_blink_vibra_sms_0={CFG_CHECKBOX,VIBRATE_MSG,0,0};
+	__root const int cfg_vibraSms = 0;
+	__root const CFG_HDR cfghdr_vibra_time_sms_0={CFG_UINT,VIBRA_TIME_MSG,50,100000};
+	__root const int cfg_vibraSms_time = 1000;
+    __root const CFG_HDR cfghdr_vibra_sms_0x={CFG_LEVEL,"",0,0};
+    __root const CFG_HDR cfghdr_redled_sms_0={CFG_LEVEL,REDLED_MSG,1,0};
+	__root const CFG_HDR cfghdr_blink_redled_sms_0={CFG_CHECKBOX,BLINK_MSG,0,0};
+	__root const int cfg_redledSms = 0;
+	__root const CFG_HDR cfghdr_blink_redled_time_sms_0={CFG_UINT,BLINK_TIME_MSG,1,10000};
+	__root const int cfg_redledSms_time = 2;
+    __root const CFG_HDR cfghdr_redled_sms_0x={CFG_LEVEL,"",0,0};
+    __root const CFG_HDR cfghdr_led_sms_0={CFG_LEVEL,LED_MSG,1,0};
+	__root const CFG_HDR cfghdr_blink_led_sms_0={CFG_CHECKBOX,BLINK_MSG,0,0};
+	__root const int cfg_ledSms = 0;
+	__root const CFG_HDR cfghdr_blink_led_time_sms_0={CFG_UINT,BLINK_TIME_MSG,1,10000};
+	__root const int cfg_ledSms_time = 2;
+    __root const CFG_HDR cfghdr_led_sms_0x={CFG_LEVEL,"",0,0};
+    __root const CFG_HDR cfghdr_screen_sms_0={CFG_LEVEL,SCREEN_MSG,1,0};
+	__root const CFG_HDR cfghdr_blink_screen_sms_0={CFG_CHECKBOX,BLINK_MSG,0,0};
+	__root const int cfg_screenSms = 0;
+	__root const CFG_HDR cfghdr_blink_screen_time_sms_0={CFG_UINT,BLINK_TIME_MSG,0,10000};
+	__root const int cfg_screenSms_time = 2;
+    __root const CFG_HDR cfghdr_screen_sms_0x={CFG_LEVEL,"",0,0};
+__root const CFG_HDR cfghdr_sms_0x={CFG_LEVEL,"",0,0};
 
 __root const CFG_HDR cfghdr_press_call={CFG_LEVEL,PRESS_CALL_MSG,1,0};
     __root const CFG_HDR cfghdr_lamp_0={CFG_LEVEL,LAMP_MSG,1,0};

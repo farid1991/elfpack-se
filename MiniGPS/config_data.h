@@ -11,6 +11,8 @@ extern const int cfg_showcellid;
 extern const int cfg_chowcellidmode;
 extern const int cfg_autolocation;
 extern const int cfg_autolocationmode;
+extern const int cfg_setnamekey;
+extern const int cfg_setnamekeymode;
 extern const int cfg_ignore_keylock;
 // -------------------------------------------------------------------------- //
 

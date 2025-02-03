@@ -11,7 +11,7 @@ inline int toupper(int _C) { return (islower(_C)?_C-'a'+'A':_C);}
 //#ifdef __cplusplus
 //extern "C"
 //{
-//#endif /* __cplusplus */ 
+//#endif /* __cplusplus */
 
 void splitfilename(const wchar_t* src, wchar_t* destpath, wchar_t* destname);
 void extractdir(wchar_t* path,wchar_t* name, const wchar_t* src);
@@ -22,5 +22,5 @@ void getdir(wchar_t* path, const wchar_t* src);
 //#endif /*__cplusplus*/
 
 extern "C" unsigned long wcstoul(const wchar_t *, wchar_t **, int);
- 
-#endif /* _UTIL_H_ */ 
+
+#endif /* _UTIL_H_ */

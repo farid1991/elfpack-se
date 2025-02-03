@@ -335,6 +335,7 @@ static int ReconfigElf(void * mess,BOOK *book)
  {
 	 InitConfig();
 	 StartHoursTimer();
+	 SendCashReq();
  }
  return(1);
 }

@@ -963,7 +963,6 @@
           <name>CCDefines</name>
           <state>NDEBUG</state>
           <state>LANG_RU</state>
-          <state>OLDFUNCTIONS</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -979,7 +978,7 @@
         </option>
         <option>
           <name>CCListCFile</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>CCListCMnemonics</name>
@@ -991,7 +990,7 @@
         </option>
         <option>
           <name>CCListAssFile</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>CCListAssSource</name>
@@ -1033,7 +1032,7 @@
         <option>
           <name>CCAllowList</name>
           <version>1</version>
-          <state>1010111</state>
+          <state>1111111</state>
         </option>
         <option>
           <name>CCObjUseModuleName</name>
@@ -1410,7 +1409,7 @@
         </option>
         <option>
           <name>XList</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>SegmentMap</name>
@@ -1788,7 +1787,6 @@
           <name>CCDefines</name>
           <state>NDEBUG</state>
           <state>LANG_EN</state>
-          <state>OLDFUNCTIONS</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1804,7 +1802,7 @@
         </option>
         <option>
           <name>CCListCFile</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>CCListCMnemonics</name>
@@ -1816,7 +1814,7 @@
         </option>
         <option>
           <name>CCListAssFile</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>CCListAssSource</name>
@@ -1858,7 +1856,7 @@
         <option>
           <name>CCAllowList</name>
           <version>1</version>
-          <state>1010111</state>
+          <state>1111111</state>
         </option>
         <option>
           <name>CCObjUseModuleName</name>
@@ -2235,7 +2233,7 @@
         </option>
         <option>
           <name>XList</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>SegmentMap</name>
@@ -2613,7 +2611,6 @@
           <name>CCDefines</name>
           <state>NDEBUG</state>
           <state>LANG_CN</state>
-          <state>OLDFUNCTIONS</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -2629,7 +2626,7 @@
         </option>
         <option>
           <name>CCListCFile</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>CCListCMnemonics</name>
@@ -2641,7 +2638,7 @@
         </option>
         <option>
           <name>CCListAssFile</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>CCListAssSource</name>
@@ -2683,7 +2680,7 @@
         <option>
           <name>CCAllowList</name>
           <version>1</version>
-          <state>1010111</state>
+          <state>1111111</state>
         </option>
         <option>
           <name>CCObjUseModuleName</name>
@@ -3060,7 +3057,7 @@
         </option>
         <option>
           <name>XList</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>SegmentMap</name>
@@ -3563,7 +3560,7 @@
           </option>
           <option>
             <name>CCListCFile</name>
-            <state>1</state>
+            <state>0</state>
           </option>
           <option>
             <name>CCListCMnemonics</name>
@@ -3575,7 +3572,7 @@
           </option>
           <option>
             <name>CCListAssFile</name>
-            <state>1</state>
+            <state>0</state>
           </option>
           <option>
             <name>CCListAssSource</name>
@@ -3607,7 +3604,7 @@
           </option>
           <option>
             <name>CCOptSizeSpeed</name>
-            <state>1</state>
+            <state>0</state>
           </option>
           <option>
             <name>CCOptimization</name>
@@ -3617,7 +3614,7 @@
           <option>
             <name>CCAllowList</name>
             <version>1</version>
-            <state>1010111</state>
+            <state>1111111</state>
           </option>
           <option>
             <name>CCObjUseModuleName</name>
@@ -3701,7 +3698,7 @@
           </option>
           <option>
             <name>CCOptSizeSpeedSlave</name>
-            <state>1</state>
+            <state>0</state>
           </option>
           <option>
             <name>CCOptimizationSlave</name>

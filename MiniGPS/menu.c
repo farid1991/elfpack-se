@@ -6,7 +6,7 @@
 #include "menu.h"
 #include "language.h"
 
-#define MENU_ITEM_NUM   5
+#define MENU_ITEM_NUM   6
 
 void AutoOKPressed(BOOK * bk, wchar_t *string, int len)
 {
@@ -18,6 +18,8 @@ void AutoOKPressed(BOOK * bk, wchar_t *string, int len)
 
 void AutoBackPressed(BOOK * bk, u16 *string, int len)
 {
+  if (!timer)
+    Timer_ReSet(&timer, 1000, onTimer, 0);
   BookObj_ReturnPage(bk,NIL_EVENT);
 }
 
@@ -35,6 +37,38 @@ void CreateAutoLacationInput()
                             VAR_STRINP_MAX_LEN(MAX_AUTOLOCATION_LEN - 1),
                             VAR_STRINP_MODE(IT_STRING),
                             VAR_OK_PROC(AutoOKPressed),
+                            VAR_PREV_ACTION_PROC(AutoBackPressed),
+                            0);
+  BookObj_SetFocus( &bk->book,0);
+  GUIObject_Show(bk->text_input);
+}
+
+void SetNameOKPressed(BOOK * bk, wchar_t *string, int len)
+{
+  AddTo_db(string);
+  CheckCurrentCell();
+  Timer_ReSet(&timer, 1000, onTimer, 0);
+  BookObj_ReturnPage(bk,NIL_EVENT);
+}
+
+void CreateSetNameInput()
+{
+  if (timer) {
+    Timer_Kill(&timer);
+    timer = 0;
+  }
+  MyBOOK * bk = (MyBOOK *) FindBook(isMiniGPSBook);
+  FREE_GUI(bk->text_input);
+  TEXTID text = TextID_Create(CellName,ENC_UCS2,TEXTID_ANY_LEN);
+  bk->text_input = CreateStringInputVA(0,
+                            VAR_BOOK(bk),
+                            VAR_STRINP_FIXED_TEXT(TextID_Create(LG_CURRENTLOCATION,ENC_UCS2,TEXTID_ANY_LEN)),
+                            VAR_STRINP_TEXT(text),
+                            VAR_STRINP_NEW_LINE(0),
+                            VAR_STRINP_ENABLE_EMPTY_STR(0),
+                            VAR_STRINP_MAX_LEN(MAX_AUTOLOCATION_LEN - 1),
+                            VAR_STRINP_MODE(IT_STRING),
+                            VAR_OK_PROC(SetNameOKPressed),
                             VAR_PREV_ACTION_PROC(AutoBackPressed),
                             0);
   BookObj_SetFocus( &bk->book,0);
@@ -70,9 +104,12 @@ int menu_callback(GUI_MESSAGE * msg)
           str_id  = TextID_Create(LG_AUTOLOCATION_ON,ENC_UCS2,TEXTID_ANY_LEN);
         break;
       case 3:
-        str_id  = TextID_Create(LG_SETTINGS,ENC_UCS2,TEXTID_ANY_LEN);
+        str_id  = TextID_Create(LG_SETLOCATIONNAME,ENC_UCS2,TEXTID_ANY_LEN);
         break;
       case 4:
+        str_id  = TextID_Create(LG_SETTINGS,ENC_UCS2,TEXTID_ANY_LEN);
+        break;
+      case 5:
         str_id  = TextID_Create(LG_ABOUT,ENC_UCS2,TEXTID_ANY_LEN);
         break;
       }
@@ -116,10 +153,13 @@ void MenuOnEnter( BOOK* book, GUI* )
     }
     break;
   case 3:
+    CreateSetNameInput();
+    break;
+  case 4:
     onBcfgConfig(0, book);
     BookObj_ReturnPage(book,NIL_EVENT);
     break;
-  case 4:
+  case 5:
     ShowAuthorInfo(0 , book);
     BookObj_ReturnPage(book,NIL_EVENT);
     break;

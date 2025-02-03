@@ -21,14 +21,18 @@ __root const CFG_HDR cfghdr_setctrl={CFG_LEVEL,LG_GFGSETCTRL,1,0};
     __root const CFG_HDR cfghdr_key={CFG_KEYCODE,LG_GFGSHOWKEY,0,0};
     __root const int cfg_showkey = 0;
     __root const int cfg_showkeymode = 0;
-  
+
     __root const CFG_HDR cfghdr_show={CFG_KEYCODE,LG_GFGCELLIDNAMEKEY,0,0};
     __root const int cfg_showcellid = 0;
     __root const int cfg_chowcellidmode = 0;
-  
+
     __root const CFG_HDR cfghdr_auto_1={CFG_KEYCODE,LG_GFGAUTOLOCATIONKEY,0,0};
     __root const int cfg_autolocation = 0;
     __root const int cfg_autolocationmode = 0;
+
+    __root const CFG_HDR cfghdr_setname={CFG_KEYCODE,LG_GFGSETNAMEKEY,0,0};
+    __root const int cfg_setnamekey = 0;
+    __root const int cfg_setnamekeymode = 0;
 
   __root const CFG_HDR cfghdr_buttons_x={CFG_LEVEL,"",0,0};
 
@@ -247,7 +251,7 @@ __root const CFG_HDR cfghdr_setother={CFG_LEVEL,LG_GFGSETOTHER,1,0};
 
   __root const CFG_HDR cfghdr_standby_only_0={CFG_CHECKBOX,LG_GFGSTANDBAYONLY,0,0};
   __root const int cfg_standby_only = 1;
-  
+
   __root const CFG_HDR cfghdr_gdfs={CFG_CHECKBOX,LG_GFGSETINGDFS,0,0};
   __root const int cfg_set_in_gdfs = 1;
 
