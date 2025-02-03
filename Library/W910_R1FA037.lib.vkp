@@ -1,6 +1,6 @@
 ;W910 SW-R1FA037
 ;Function library
-;
+;v 2025
 ;(c) Hussein , IronMaster
 ;(p) dimonp25, Троян, farid
 ;pAtChFiLe=/boot/phone_app.cxc
@@ -315,8 +315,8 @@
 0914: 00000000 F1846211 ; 245: void GUIonMessage_SubItem_SetText( GUI_MESSAGE* msg, TEXTID );
 0918: 00000000 E5846211 ; 246: int GUIonMessage_SubItem_GetCreatedParentIndex( GUI_MESSAGE* msg );
 091C: 00000000 359E4511 ; 247: void GoMusic( void );
-;0920: xxxxxxxx yyyyyyyy ; 248: int GUIonMessage_SubItem_GetSelectedIndex( GUI_MESSAGE* msg );
-;0924: xxxxxxxx yyyyyyyy ; 249: void GUIonMessage_SubItem_SetDisabled( GUI_MESSAGE* msg, BOOL state );
+0920: 00000000 C1846211 ; 248: int GUIonMessage_SubItem_GetSelectedIndex( GUI_MESSAGE* msg );
+0924: 00000000 61856211 ; 249: void GUIonMessage_SubItem_SetDisabled( GUI_MESSAGE* msg, BOOL state );
 0928: 00000000 612C1C11 ; 24A: int PlayFileV( const wchar_t* path, const wchar_t* fname, int vol );
 092C: 00000000 C1FB1811 ; 24B: int GetSilent( void );
 0930: 00000000 99B81811 ; 24C: int GetVibrator( int ignorevibrator, int ignoresilent );
@@ -533,7 +533,7 @@
 0C7C: 00000000 D5A6FF10 ; 31F: void DataBrowserDesc_Menu_AddNewFolder( void* DataBrowserDesc, int );
 0C80: 00000000 DDA6FF10 ; 320: void DataBrowserDesc_Menu_AddMarkFiles( void* DataBrowserDesc, int );
 0C84: 00000000 FD086911 ; 321: void SetTheme( wchar_t* path, wchar_t* name, int bookid, int unk_1 );
-0C88: 00000000 9DF26811 ; 322: void SoftKeys_GetLabel( DISP_OBJ* softkeys, SKLABEL* lbl, int id );
+0C88: 00000000 99F26811 ; 322: void SoftKeys_GetLabel( DISP_OBJ* softkeys, SKLABEL* lbl, int id );
 0C8C: 00000000 ADEE6811 ; 323: void SoftKeys_Update( DISP_OBJ* softkeys );
 0C90: 00000000 09B97211 ; 324: int get_CellData( PLMN_LAC_DESC* desc1, RAT_CI_DESC* desc2, char* CSReg );
 0C94: 00000000 4546F010 ; 325: void* IncommingCall_Reject( BOOK* book );
@@ -723,12 +723,12 @@
 0F74: 00000000 EDFA6811 ; 3DD: void GUIObject_SoftKeys_SubActionPressedNotification( GUI*, u16 actionID, BOOL );
 ;0F78: xxxxxxxx yyyyyyyy ; 3DE:
 ;0F7C: xxxxxxxx yyyyyyyy ; 3DF:
-;0F80: xxxxxxxx yyyyyyyy ; 3E0: int fs_demand_cache_page( int virtAddr, int mode, int intrMask );
-;0F84: xxxxxxxx yyyyyyyy ; 3E1: int fs_demand_pagePool_alloc_mem( pagePool* pagePool_p, int intrMask );
-;0F88: xxxxxxxx yyyyyyyy ; 3E2: wchar_t fs_demand_get_page_i_from_queue( wchar_t* queue, char only_allocked_pool, int page_count );
-;0F8C: xxxxxxxx yyyyyyyy ; 3E3: void fs_demand_remove_from_queue( pageCache* page_p_to_remove, wchar_t page_i_to_insert );
-;0F90: xxxxxxxx yyyyyyyy ; 3E4: int fs_demand_kick_out_page( wchar_t page_i, int intrMask );
-;0F94: xxxxxxxx yyyyyyyy ;83E5: char* getSWAP_DATA_BASE( void );
+0F80: 00000000 9155B128 ; 3E0: int fs_demand_cache_page( int virtAddr, int mode, int intrMask );
+0F84: 00000000 D157B128 ; 3E1: int fs_demand_pagePool_alloc_mem( pagePool* pagePool_p, int intrMask );
+0F88: 00000000 DD52B128 ; 3E2: wchar_t fs_demand_get_page_i_from_queue( wchar_t* queue, char only_allocked_pool, int page_count );
+0F8C: 00000000 A150B128 ; 3E3: void fs_demand_remove_from_queue( pageCache* page_p_to_remove, wchar_t page_i_to_insert );
+0F90: 00000000 3D51B128 ; 3E4: int fs_demand_kick_out_page( wchar_t page_i, int intrMask );
+0F94: 00000000 B4A2BD28 ;83E5: char* getSWAP_DATA_BASE( void );
 
 
 

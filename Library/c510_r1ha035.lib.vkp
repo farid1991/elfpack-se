@@ -338,7 +338,7 @@
 ;0970: xxxxxxxx yyyyyyyy ; 25C:
 0974: 00000000 E5B92214 ; 25D: int TabMenuBar_GetFocusedTab( GUI_TABMENUBAR* );
 0978: 00000000 1D741214 ; 25E: void TabMenuBar_SetFocusedTab( GUI_TABMENUBAR*, int tab_num );
-097C: 00000000 41544314 ; 25F: int GC_GetPenColor( GC* gc );
+097C: 00000000 ADD14C14 ; 25F: int GC_GetPenColor( GC* gc );
 0980: 00000000 8DE14914 ; 260: void GC_SetPenColor( GC* gc, int pen_color );
 0984: 00000000 9DE30C14 ; 261: void GC_SetPixel( GC* gc, int x1, int y1, int color );
 0988: 00000000 BD170914 ; 262: void GC_DrawLine( GC* gc, int x1, int y1, int x2, int y2 );
