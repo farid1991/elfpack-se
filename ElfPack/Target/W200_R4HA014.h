@@ -5,7 +5,7 @@
 #define HELPER_SIG 0x6FF0
 
 #define PATH_USER_INT         L"/usb"
-#define PATH_USER_EXT         L"/usb"
+#define PATH_USER_EXT         L"/card/MSSEMC/Media files"
 #define PATH_AUDIO_INT        L"/usb/audio"
 #define PATH_AUDIO_EXT        L"/card/MSSEMC/Media files/audio"
 #define PATH_IMAGE_INT        L"/usb/image"

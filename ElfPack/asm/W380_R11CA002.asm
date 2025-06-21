@@ -1,10 +1,10 @@
-//K610_R8BE001
+//W380_R11CA002
 #include "target.h"
-
         RSEG   CODE
         CODE32
 
-TABMENUBAR_NAME EQU 0x45B467C8
+TABMENUBAR_NAME EQU 0x217BE100
+LAST_EXTDB EQU 0x216DC544
 
 defadr  MACRO   a,b
         PUBLIC  a
@@ -12,11 +12,11 @@ a       EQU     b
         ENDM
 
         RSEG  CODE
-        defadr   DB_PATCH3_RET,0x44FA5794+1
 
-        defadr  memalloc,0x44E39424+1
-        defadr  memfree,0x44E39450+1
+        defadr  memalloc,0x20DAEBB4+1
+        defadr  memfree,0x20DAFA68+1
 
+        
 // --- Patch Keyhandler ---
 	EXTERN Keyhandler_Hook
 	RSEG  PATCH_KEYHANDLER1
@@ -37,33 +37,40 @@ NEW_KEYHANDLER1:
 	POP	{R2,R3}
 	BX	R12
 
+
 	RSEG  PATCH_KEYHANDLER1
         CODE16
         LDR     R3,=NEW_KEYHANDLER1
         BX      R3
 
+
 	RSEG  PATCH_KEYHANDLER1_STACK1(1)
         CODE16
 	SUB	SP, #0xC
 
+
 	RSEG  PATCH_KEYHANDLER1_STACK2(1)
         CODE16
 	ADD	SP, #0xC
+
 
 	RSEG  PATCH_KEYHANDLER1_CHANGE1(1)
         CODE16
 	MOV	R0, SP
 	LDRH	R1, [R0,#0x10]
 
+
 	RSEG  PATCH_KEYHANDLER1_CHANGE2(1)
         CODE16
 	MOV	R0, SP
 	LDRH	R1, [R0,#0xC]
 
+
 	RSEG  PATCH_KEYHANDLER1_CHANGE3(1)
         CODE16
 	MOV	R2, SP
 	LDRH	R3, [R2,#0x8]
+
 
 	RSEG  PATCH_KEYHANDLER1_CHANGE4(1)
         CODE16
@@ -141,18 +148,18 @@ MESS_HOOK:
         RSEG   CODE
         CODE16
 PG_ACTION:
-	MOV	R2, R5
-	LDR	R1, [SP,#0x18]
-	MOV	R0, R4
+	ADD	R2, R6, #0
+	ADD	R1, R5, #0
+	ADD	R0, R4, #0
         BLX     PageAction_Hook2
         LDR     R5,=SFE(PATCH_PageActionImpl_All)+1
         BX      R5
+
 
         RSEG    PATCH_PageActionImpl_All
         CODE16
         LDR     R2, =PG_ACTION
         BX      R2
-
 
         EXTERN  PageAction_Hook2
         RSEG    PATCH_PageActionImpl_EnterExit
@@ -174,17 +181,18 @@ PG_ACTION2:
 
 
 // --- Data Browser ---
+
         EXTERN  GetExtTable
-        RSEG   PATCH_DB1
-        RSEG   CODE
+        RSEG    PATCH_DB1
+        RSEG    CODE
         CODE16
 DB_PATCH:
-        LSL     R7, R1, #2
+        LSL     R7, R6, #2
         BLX     GetExtTable
-        LDR     R7, [R0,R7]
-        LDR     R1, =EXT_TABLE
-        LDR     R3, =SFE(PATCH_DB1)+1
-        BX      R3
+        LDR     R0, [R0,R7]
+        LDR     R3, =LAST_EXTDB
+        LDR     R1, =SFE(PATCH_DB1)+1
+        BX      R1
 
 
         RSEG   PATCH_DB2
@@ -202,19 +210,23 @@ DBEXT:
         BX      R3
 
 
+        RSEG   PATCH_DB3
         RSEG   CODE
         CODE16
 DB_PATCH3:
-        MOV     R6, #0
-        ADD     R5, R0, #0
+        MOV     R0, #0
+        STRB    R0, [R1,#0]
+        CMP     R4, #0
         BEQ     L_DB3EX
         BLX     GetExtTable
-        ADD     R4, R0, #0
-        LDR     R1, =DB_PATCH3_RET
-        BX      R1
+        LDR     R7, =EXT_TABLE
+        ADD     R5, R0, #0
+        LDR     R3, =0x20CB11FE+1
+        BX      R3
 
 L_DB3EX
-        ADD     R0, R6, #0
+        MOV     R6, SP
+        LDRB    R0, [R6,#0]
         ADD     SP, #8
         POP     {R4-R7,PC}
 
@@ -223,54 +235,54 @@ L_DB3EX
         RSEG   CODE
         CODE16
 DB_PATCH4:
-        ADD     R2, SP, #4
-        PUSH    {R2}
-        LDR     R0, [R0, #0]
+        PUSH    {R0}
+        LDR     R0, [R6,#0]
         MOV     R3, #2
         PUSH    {R0-R3}
         BLX     GetExtTable
-        ADD     R7, R0, #0
+        ADD     R6, R0, #0
         POP     {R0-R3}
         LDR     R1, =SFE(PATCH_DB4)+1
         BX      R1
 
 
-        RSEG   PATCH_DB1(2)
+        RSEG   PATCH_DB1
         CODE16
         LDR    R3, =DB_PATCH
         BX     R3
 
-        RSEG   PATCH_DB2(2)
+        RSEG   PATCH_DB2
         CODE16
         LDR    R3, =DBEXT
         BX     R3
 
-        RSEG   PATCH_DB3(2)
+        RSEG   PATCH_DB3
         CODE16
         LDR    R3, =DB_PATCH3
         BX     R3
 
-        RSEG   PATCH_DB4(2)
+        RSEG   PATCH_DB4
         CODE16
         LDR    R3, =DB_PATCH4
         BX     R3
-
 
         RSEG   CODE
         CODE16
 TabMenuCheck:
         PUSH    {LR}
-        LDR     R0, [R0, #0] //GUIObject_GetDispObject
-        LDR     R0, [R0, #8] //DispObject_GetName ptr1
-        LDR     R0, [R0, #0] //DispObject_GetName ptr2
+        LDR     R0, [R0,#0] // GUIObject_GetDispObject
+        LDR     R0, [R0,#8] // DispObject_GetName ptr1
+        LDR     R0, [R0,#0] // DispObject_GetName ptr2
         LDR     R1, =TABMENUBAR_NAME
         CMP     R0, R1
         BNE     TabMenuCheck_false
         MOV     R0, #1
         POP     {PC}
+
 TabMenuCheck_false:
         MOV     R0, #0
         POP     {PC}
+
 
         RSEG   PATCH_TabMenuCheck
         CODE16

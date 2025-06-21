@@ -1,7 +1,7 @@
-#ifndef _W350_R11CA002_
-#define _W350_R11CA002_
+#ifndef _W380_R11CA002_
+#define _W380_R11CA002_
 
-#define EXT_TABLE 0x216CEAE0
+#define EXT_TABLE 0x216DC48C
 #define HELPER_SIG 0x6FF0
 
 #define PATH_USER_INT         L"/tpa/user"
