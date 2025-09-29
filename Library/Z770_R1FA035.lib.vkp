@@ -9,7 +9,7 @@
 044C: 00000000 A8F50B10 ; 113: int memcpy( void* dest,const void* source, int cnt );
 0450: 00000000 752C5510 ; 114: int sprintf( char* buf, const char* fmt, ... );
 0454: 00000000 29315510 ; 115: int snwprintf( wchar_t* buffer, int size, const wchar_t* fmt, ... );
-0458: 00000000 49FDFF10 ; 116: int _fopen( const wchar_t* filpath, const wchar_t*filname, unsigned int mode, unsigned int rights, unsigned int __0 );
+0458: 00000000 49FDFF10 ; 116: int _fopen( const wchar_t* filpath, const wchar_t* filname, unsigned int mode, unsigned int rights, unsigned int __0 );
 045C: 00000000 F1FB5B11 ; 117: int fclose( int file );
 0460: 00000000 8D140011 ; 118: int fread( int file, void* ptr, int size );
 0464: 00000000 59160011 ; 119: int fwrite( int file, const void* ptr, int size );
